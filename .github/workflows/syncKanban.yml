@@ -28,7 +28,7 @@ jobs:
 
       - name: Sync Kanban
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_GH_TOKEN }}   # ✅ use your PAT here
           KANBAN_PROJECT_ID: ${{ secrets.KANBAN_PROJECT_ID }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python .github/scripts/syncKanban.py
