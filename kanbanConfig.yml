@@ -1,0 +1,66 @@
+project:
+  name: "Barakat Nutrition - GitHub Kanban Board"
+  body: "Automated project board mirroring the design as of November 9, 2025."
+
+columns:
+  - name: "Backlog"
+    issues:
+      - title: "Whatsapp Integration"
+        labels: ["Frontend", "Network"]
+      - title: "Advanced AI (hair/skin)"
+        labels: ["AI"]
+      - title: "Caregiver App"
+        labels: ["Frontend", "Backend"]
+      - title: "Hospital System Integration"
+        labels: ["Network"]
+
+  - name: "To Do"
+    issues:
+      - title: "Meeting with Gravity"
+        labels: ["Meeting"]
+      - title: "Connect Frontend to Backend"
+        labels: ["Frontend", "Backend"]
+      - title: "Image Collection Start"
+        labels: ["AI", "Data"]
+      - title: "Backend Testing"
+        labels: ["Backend", "Testing"]
+
+  - name: "In Progress"
+    issues:
+      - title: "Finish Figma Mockups"
+        labels: ["Frontend", "Design"]
+      - title: "Frontend React App"
+        labels: ["Frontend"]
+      - title: "Camera App Development"
+        labels: ["Frontend"]
+      - title: "Practice Image Collection"
+        labels: ["AI", "Data"]
+      - title: "Reference Object Testing"
+        labels: ["AI", "Testing"]
+
+  - name: "Review"
+    issues:
+      - title: "SDK Documentation"
+        labels: ["Documentation", "Backend"]
+      - title: "Database Schema"
+        labels: ["Backend"]
+
+  - name: "Done"
+    issues:
+      - title: "Supabase Pro Setup"
+        labels: ["Backend"]
+      - title: "Basic SDK Created"
+        labels: ["Backend"]
+      - title: "Backend Structure Planned"
+        labels: ["Backend"]
+      - title: "AI Approach Determined"
+        labels: ["AI"]
+      - title: "Project Charter"
+        labels: ["Documentation"]
+
+  - name: "Deployed"
+    issues:
+      - title: "GitHub Repository Setup"
+        labels: ["Network"]
+      - title: "Team Structure Defined"
+        labels: ["Management"]
