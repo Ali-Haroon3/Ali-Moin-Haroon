@@ -1,6 +1,6 @@
 project:
   name: "Barakat Nutrition - GitHub Kanban Board"
-  body: "Automated project board mirroring the design as of November 9, 2025."
+  description: "Synced from kanbanConfig.yml."
 
 columns:
   - name: "Backlog"
