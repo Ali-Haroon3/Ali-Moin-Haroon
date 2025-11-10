@@ -12,7 +12,7 @@ jobs:
     permissions:
       contents: read
       issues: write
-      projects: write
+      project: write   # ✅ Fixed: was 'projects'
 
     steps:
       - name: Checkout repo
