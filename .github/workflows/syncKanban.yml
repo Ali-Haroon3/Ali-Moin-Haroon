@@ -12,7 +12,7 @@ jobs:
     permissions:
       contents: read
       issues: write
-      projects: write   # ✅ correct and valid key
+      repository-projects: write   # ✅ this is the correct key
 
     steps:
       - name: Checkout repo
