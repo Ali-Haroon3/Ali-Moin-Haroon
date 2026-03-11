@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ali Haroon | Software Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="nav">
+        <a href="#" class="logo">AH</a>
+        <div class="nav-links">
+          <a href="#experience">Experience</a>
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="mailto:ali.haroon@colorado.edu">Contact</a>
+        </div>
+      </nav>
+
+      <div class="hero-content">
+        <p class="eyebrow">Senior @ CU Boulder • CS + Math + Biochemistry</p>
+        <h1>Ali Haroon</h1>
+        <p class="subtitle">
+          I build reliable software systems, data pipelines, and ML-powered products—from
+          distributed infrastructure and observability tooling to full-stack research apps.
+        </p>
+
+        <div class="cta-group">
+          <a class="btn primary" href="mailto:ali.haroon@colorado.edu">Email Me</a>
+          <a class="btn" href="https://github.com/Ali-Haroon3" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="btn" href="https://www.ali-haroon.com" target="_blank" rel="noreferrer">Portfolio</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="experience" class="section">
+        <div class="section-head">
+          <h2>Experience</h2>
+          <button id="expandToggle" class="chip">Expand all details</button>
+        </div>
+        <div class="timeline">
+          <article class="card collapsible">
+            <button class="card-header" aria-expanded="false">
+              <div>
+                <h3>Software Development Intern • Vantor</h3>
+                <p>Westminster, CO • Jun 2025 – Aug 2025</p>
+              </div>
+              <span class="plus">+</span>
+            </button>
+            <ul class="card-body">
+              <li>Engineered distributed infrastructure for 6 satellite ground-station monitoring environments using Java + Kubernetes, reducing critical incident response time by 30%.</li>
+              <li>Built observability dashboards with Grafana, Prometheus, and Java collectors across 35 production services.</li>
+              <li>Designed automated testing workflows for 15+ Linux microservices with Jenkins CI/CD.</li>
+              <li>Implemented Spring Boot APIs handling 1K+ requests/minute for low-latency inference.</li>
+            </ul>
+          </article>
+
+          <article class="card collapsible">
+            <button class="card-header" aria-expanded="false">
+              <div>
+                <h3>Data Management Research Assistant • CUChange</h3>
+                <p>Boulder, CO • Jul 2025 – Present</p>
+              </div>
+              <span class="plus">+</span>
+            </button>
+            <ul class="card-body">
+              <li>Developed full-stack Django applications with PostgreSQL on GCP for 50K+ research records.</li>
+              <li>Built automated pipelines with Python, pandas, and REDCap API for large-scale cleaning + transformation.</li>
+              <li>Designed migration/reporting workflows that improved data processing speed by 300%.</li>
+            </ul>
+          </article>
+
+          <article class="card collapsible">
+            <button class="card-header" aria-expanded="false">
+              <div>
+                <h3>Software Engineering Intern • ReportsNow</h3>
+                <p>Greenwood Village, CO • May 2024 – Jul 2024</p>
+              </div>
+              <span class="plus">+</span>
+            </button>
+            <ul class="card-body">
+              <li>Built BI platform using C#, ASP.NET Core, and React across 125+ client systems.</li>
+              <li>Optimized SQL Server analytics stack with EF to support 500+ daily queries.</li>
+              <li>Implemented Azure DevOps + Docker CI/CD in Agile/SCRUM workflows.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="projects" class="section">
+        <div class="section-head">
+          <h2>Projects</h2>
+          <div class="filters" role="tablist" aria-label="Project filter">
+            <button class="chip filter active" data-filter="all">All</button>
+            <button class="chip filter" data-filter="ml">ML/Data</button>
+            <button class="chip filter" data-filter="quant">Quant</button>
+            <button class="chip filter" data-filter="fullstack">Full-Stack</button>
+          </div>
+        </div>
+
+        <div class="grid" id="projectGrid">
+          <article class="project" data-tags="ml quant">
+            <h3>Polymarket Weather Prediction</h3>
+            <p>Rust, Python, NumPy, pandas, Scikit-learn, PostgreSQL</p>
+            <a href="https://github.com/Ali-Haroon3/Polymarket-Weather-Predictor" target="_blank" rel="noreferrer">View on GitHub ↗</a>
+          </article>
+          <article class="project" data-tags="ml fullstack">
+            <h3>BlackjackTrainer</h3>
+            <p>Python, Flask, JavaScript, AWS</p>
+            <a href="https://github.com/Ali-Haroon3/AIBlackJackTrainer" target="_blank" rel="noreferrer">View on GitHub ↗</a>
+          </article>
+          <article class="project" data-tags="ml fullstack">
+            <h3>Lung Cancer Detection</h3>
+            <p>Python, TensorFlow, Streamlit, PostgreSQL</p>
+            <a href="https://github.com/Ali-Haroon3/Lung-Cancer-Detection" target="_blank" rel="noreferrer">View on GitHub ↗</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="skills" class="section">
+        <h2>Skills</h2>
+        <div class="skill-list">
+          <span>Python</span><span>Rust</span><span>C#</span><span>Java</span><span>SQL</span><span>JavaScript</span>
+          <span>TensorFlow</span><span>PyTorch</span><span>Scikit-learn</span><span>Kubernetes</span><span>Docker</span>
+          <span>AWS</span><span>Jenkins</span><span>Azure DevOps</span><span>PostgreSQL</span><span>Grafana</span><span>Prometheus</span>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>© <span id="year"></span> Ali Haroon • US Citizen</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
