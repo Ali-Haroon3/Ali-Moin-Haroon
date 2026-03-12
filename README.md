@@ -1,12 +1,13 @@
-# Ali-Moin-Haroon
-README.md
-Hey! I'm Ali! 👋🏾
-📚 I'm currently a student studying Computer Science at CU Boulder and graduating in May 2026.
+# Ali Haroon Portfolio
 
-👨🏾‍💻 I'm also a part-time software engineering intern at Leidos, working on projects using Python, PostgreSQL, and Docker
+Updated personal website content with current resume highlights, working links, and interactive UI improvements.
 
-📱 Lately, I've been working on a terms of service app called TOS Unravel
+## Local preview
 
-📸 I love working on datascience, I've been trying to find new ways to work with AR
+Open `index.html` directly in your browser, or run:
 
-Lets keep in touch!
+```bash
+python3 -m http.server 8000
+```
+
+Then visit `http://localhost:8000`.
