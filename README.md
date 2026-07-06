@@ -11,3 +11,4 @@ python3 -m http.server 8000
 ```
 
 Then visit `http://localhost:8000`.
+[![Ali's GitHub stats](https://github-stats-extended.vercel.app/api?username=Ali-Haroon3)](https://github.com/stats-organization/github-stats-extended)
