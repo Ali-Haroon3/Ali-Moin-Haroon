@@ -257,6 +257,7 @@ function showPanel(name) {
 
 function closePanel() {
   if (!openPanel) return;
+  if (typeof cancelHold === 'function') cancelHold();
   openPanel.hidden = true;
   backdrop.hidden = true;
   openPanel = null;
@@ -294,6 +295,11 @@ const ringFill = document.getElementById('ringFill');
 const HOLD_MS = 850;
 const RING_LEN = 100.5; // 2πr for r=16
 let holdTimer = null;
+let holding = false;
+
+function contactOpen() {
+  return openPanel && openPanel.dataset.panel === 'contact' && !chestBtn.classList.contains('open');
+}
 
 function openChest() {
   if (chestBtn.classList.contains('open')) return;
@@ -306,10 +312,10 @@ function openChest() {
   }, reducedMotion ? 0 : 450);
 }
 
-function beginHold(e) {
-  if (chestBtn.classList.contains('open')) return;
+function startHold() {
+  if (holding || chestBtn.classList.contains('open')) return;
   if (reducedMotion) { openChest(); return; }
-  e.preventDefault();
+  holding = true;
   chestBtn.classList.add('holding');
   ringFill.style.transition = `stroke-dashoffset ${HOLD_MS}ms linear`;
   ringFill.style.strokeDashoffset = '0';
@@ -317,25 +323,39 @@ function beginHold(e) {
 }
 
 function cancelHold() {
-  if (!holdTimer) return;
-  clearTimeout(holdTimer);
-  holdTimer = null;
+  holding = false;
+  if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
   chestBtn.classList.remove('holding');
   ringFill.style.transition = 'none';
   ringFill.style.strokeDashoffset = RING_LEN;
 }
 
-chestBtn.addEventListener('pointerdown', beginHold);
+// mouse / touch: press and hold on the chest
+chestBtn.addEventListener('pointerdown', (e) => { e.preventDefault(); startHold(); });
 chestBtn.addEventListener('pointerup', cancelHold);
 chestBtn.addEventListener('pointerleave', cancelHold);
+chestBtn.addEventListener('pointercancel', cancelHold);
+
+// keyboard: hold the physical E key while the contact panel is open (matches the prompt)
+document.addEventListener('keydown', (e) => {
+  if ((e.key === 'e' || e.key === 'E') && !e.repeat && contactOpen()) {
+    e.preventDefault();
+    startHold();
+  }
+});
+document.addEventListener('keyup', (e) => {
+  if (e.key === 'e' || e.key === 'E') cancelHold();
+});
+// Enter / Space activate instantly for assistive tech
 chestBtn.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openChest(); }
 });
 
 /* ---------- victory royale ---------- */
-const TOTAL_POIS = 6;
+// there are 6 POIs, but you only need to clear this many to win
+const VICTORY_THRESHOLD = 3;
 function maybeVictory() {
-  if (victoryShown || visited.size < TOTAL_POIS) return;
+  if (victoryShown || visited.size < VICTORY_THRESHOLD) return;
   victoryShown = true;
   victory.hidden = false;
   burstConfetti(120);

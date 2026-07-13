@@ -100,8 +100,8 @@
           <li>
             <span class="rule-dot" aria-hidden="true"></span>
             <div>
-              <h3>Clear All Six</h3>
-              <p>Visit every POI on the island to earn the Victory Royale.</p>
+              <h3>Rack Up Wins</h3>
+              <p>Clear a few POIs and the Victory Royale is yours.</p>
             </div>
           </li>
         </ul>
@@ -127,7 +127,7 @@
         </button>
         <a class="lobby-classic" href="../index.html">or switch to Classic Mode</a>
       </div>
-      <div class="lobby-tip">TIP: Hit all 6 POIs for a Victory Royale.</div>
+      <div class="lobby-tip">TIP: Clear a few POIs to earn a Victory Royale.</div>
     </div>
 
     <!-- ============ GAME / MAP SCREEN ============ -->
@@ -415,7 +415,7 @@
         <div class="victory-inner">
           <p class="victory-hash">#1</p>
           <p class="victory-title">VICTORY ROYALE</p>
-          <p class="victory-sub">You found everything. Now hire the guy.</p>
+          <p class="victory-sub">You've seen enough. Now hire the guy.</p>
           <a class="panel-btn gold" href="mailto:ali.haroon@colorado.edu">SEND THE INVITE</a>
           <button class="victory-close" id="victoryClose">Keep exploring</button>
         </div>
@@ -647,23 +647,47 @@
                   <rect x="114" y="16" width="7" height="7" fill="#fff200" transform="rotate(45 117 19)" />
                 </g>
               </g>
-              <!-- chest body: wood planks with metal trim -->
+              <!-- chest body: wood box, brass corner straps, padlock -->
               <g class="chest-body">
-                <rect x="30" y="96" width="140" height="66" fill="#7d4a24" stroke="#3f2410" stroke-width="5" />
-                <line x1="34" y1="118" x2="166" y2="118" stroke="#5c3618" stroke-width="4" />
-                <line x1="34" y1="140" x2="166" y2="140" stroke="#5c3618" stroke-width="4" />
-                <rect x="30" y="96" width="14" height="66" fill="#d9a027" stroke="#3f2410" stroke-width="4" />
-                <rect x="156" y="96" width="14" height="66" fill="#d9a027" stroke="#3f2410" stroke-width="4" />
-                <rect x="88" y="96" width="24" height="26" fill="#d9a027" stroke="#3f2410" stroke-width="4" />
-                <circle cx="100" cy="108" r="5" fill="#3f2410" />
-                <path d="M 100 108 L 96 120 L 104 120 Z" fill="#3f2410" />
+                <!-- feet -->
+                <path d="M 41 159 L 57 159 L 53 174 L 45 174 Z" fill="#c9971f" stroke="#3a2110" stroke-width="3" />
+                <path d="M 143 159 L 159 159 L 155 174 L 147 174 Z" fill="#c9971f" stroke="#3a2110" stroke-width="3" />
+                <!-- wood box -->
+                <rect x="30" y="96" width="140" height="66" rx="4" fill="#7a4a22" stroke="#3a2110" stroke-width="5" />
+                <rect x="47" y="100" width="106" height="9" fill="#8f5a2c" />
+                <line x1="47" y1="123" x2="153" y2="123" stroke="#5c3618" stroke-width="4" />
+                <line x1="47" y1="145" x2="153" y2="145" stroke="#5c3618" stroke-width="4" />
+                <!-- brass corner straps + rivets -->
+                <rect x="30" y="96" width="17" height="66" fill="#e3a72a" stroke="#3a2110" stroke-width="4" />
+                <rect x="33" y="99" width="4" height="60" fill="#ffcf4a" />
+                <rect x="153" y="96" width="17" height="66" fill="#e3a72a" stroke="#3a2110" stroke-width="4" />
+                <rect x="163" y="99" width="4" height="60" fill="#ffcf4a" />
+                <g fill="#6e4d10">
+                  <circle cx="38" cy="106" r="3" /><circle cx="38" cy="129" r="3" /><circle cx="38" cy="152" r="3" />
+                  <circle cx="161" cy="106" r="3" /><circle cx="161" cy="129" r="3" /><circle cx="161" cy="152" r="3" />
+                </g>
+                <!-- padlock -->
+                <rect x="83" y="113" width="34" height="30" rx="5" fill="#e3a72a" stroke="#3a2110" stroke-width="4" />
+                <rect x="87" y="116" width="26" height="6" fill="#ffcf4a" />
+                <circle cx="100" cy="127" r="5" fill="#3a2110" />
+                <path d="M 100 127 L 96 138 L 104 138 Z" fill="#3a2110" />
               </g>
-              <!-- lid: swings open around the back hinge -->
+              <!-- lid: barrel top, swings open around the back hinge -->
               <g class="chest-lid-g">
-                <path d="M 30 96 L 30 68 A 70 42 0 0 1 170 68 L 170 96 Z" fill="#8f5527" stroke="#3f2410" stroke-width="5" />
-                <path d="M 44 96 L 44 60 M 72 96 L 72 48 M 100 96 L 100 44 M 128 96 L 128 48 M 156 96 L 156 60" stroke="#5c3618" stroke-width="4" fill="none" />
-                <rect x="26" y="84" width="148" height="14" fill="#d9a027" stroke="#3f2410" stroke-width="4" />
-                <rect x="88" y="80" width="24" height="20" rx="3" fill="#fbd444" stroke="#3f2410" stroke-width="4" />
+                <path d="M 30 96 L 30 70 A 72 44 0 0 1 170 70 L 170 96 Z" fill="#8a5527" stroke="#3a2110" stroke-width="5" />
+                <path d="M 40 86 A 62 36 0 0 1 160 86" fill="none" stroke="#9c6631" stroke-width="5" />
+                <path d="M 58 96 L 58 56 M 86 96 L 86 51 M 114 96 L 114 51 M 142 96 L 142 56" stroke="#5c3618" stroke-width="4" fill="none" />
+                <!-- brass lip band + rivets -->
+                <rect x="26" y="82" width="148" height="16" rx="2" fill="#e3a72a" stroke="#3a2110" stroke-width="4" />
+                <rect x="28" y="84" width="144" height="4" fill="#ffcf4a" />
+                <g fill="#6e4d10">
+                  <circle cx="62" cy="90" r="2.6" /><circle cx="86" cy="90" r="2.6" /><circle cx="114" cy="90" r="2.6" /><circle cx="138" cy="90" r="2.6" />
+                </g>
+                <!-- straps wrapping over the lid, aligned with the body straps -->
+                <rect x="30" y="70" width="17" height="28" fill="#e3a72a" stroke="#3a2110" stroke-width="4" />
+                <rect x="153" y="70" width="17" height="28" fill="#e3a72a" stroke="#3a2110" stroke-width="4" />
+                <!-- hasp that lifts with the lid -->
+                <rect x="91" y="91" width="18" height="18" rx="3" fill="#ffcf4a" stroke="#3a2110" stroke-width="4" />
               </g>
               <!-- idle glint -->
               <g class="chest-idle-sparks">
@@ -702,7 +726,10 @@
       </header>
       <div class="panel-body">
         <div class="about-card">
-          <div class="about-avatar" aria-hidden="true">AH</div>
+          <div class="about-avatar">
+            <img src="me.jpg" alt="Ali Haroon" onerror="this.remove()" />
+            <span aria-hidden="true">AH</span>
+          </div>
           <div>
             <h3>Ali Haroon</h3>
             <p class="quest-meta">Software Engineer @ Visa &bull; Co-Founder @ Cronys &bull; CU Boulder '26</p>

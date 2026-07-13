@@ -633,14 +633,16 @@ body {
 
 /* about */
 .about-card { display: flex; gap: 1.1rem; align-items: flex-start; flex-wrap: wrap; }
-.about-avatar {
-  flex: 0 0 auto; width: 92px; height: 92px; border-radius: 3px;
+.about-card .about-avatar {
+  position: relative; overflow: hidden;
+  flex: 0 0 112px; width: 112px; height: 112px; border-radius: 3px;
   display: grid; place-items: center;
-  font-family: Anton, Inter, sans-serif; font-size: 2rem;
+  font-family: Anton, Inter, sans-serif; font-size: 2.2rem;
   background: var(--storm); color: #ffffff;
   border: 3px solid var(--yellow);
   box-shadow: 5px 5px 0 rgba(6,9,18,.5);
 }
+.about-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
 .about-card > div { flex: 1 1 260px; }
 .about-card h3 { margin: 0; font-size: 1.3rem; }
 .about-blurb { color: var(--muted); font-size: .92rem; line-height: 1.55; }
