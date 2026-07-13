@@ -34,6 +34,7 @@ let victoryShown = false;
 let openPanel = null;
 let realMode = false;
 let mapReady = null;
+let lootTimer = null;
 
 /* ---------- preload the real map during the boot screens ---------- */
 function preloadMap() {
@@ -257,7 +258,14 @@ function showPanel(name) {
 
 function closePanel() {
   if (!openPanel) return;
-  if (typeof cancelHold === 'function') cancelHold();
+  cancelHold();
+  // if the chest was opened moments ago, finish revealing its loot now
+  // (so a reopen shows it) but don't spray confetti over the empty map
+  if (lootTimer) {
+    clearTimeout(lootTimer);
+    lootTimer = null;
+    chestLoot.hidden = false;
+  }
   openPanel.hidden = true;
   backdrop.hidden = true;
   openPanel = null;
@@ -295,7 +303,7 @@ const ringFill = document.getElementById('ringFill');
 const HOLD_MS = 850;
 const RING_LEN = 100.5; // 2πr for r=16
 let holdTimer = null;
-let holding = false;
+let holdSource = null; // 'pointer' | 'key' — which input started the current hold
 
 function contactOpen() {
   return openPanel && openPanel.dataset.panel === 'contact' && !chestBtn.classList.contains('open');
@@ -306,24 +314,28 @@ function openChest() {
   cancelHold();
   chestBtn.classList.add('open');
   chestBtn.setAttribute('aria-expanded', 'true');
-  setTimeout(() => {
+  lootTimer = setTimeout(() => {
+    lootTimer = null;
     chestLoot.hidden = false;
-    burstConfetti(30);
+    // only celebrate if the contact panel is still on screen
+    if (openPanel && openPanel.dataset.panel === 'contact') burstConfetti(30);
   }, reducedMotion ? 0 : 450);
 }
 
-function startHold() {
-  if (holding || chestBtn.classList.contains('open')) return;
+function startHold(source) {
+  if (holdSource || chestBtn.classList.contains('open')) return;
   if (reducedMotion) { openChest(); return; }
-  holding = true;
+  holdSource = source;
   chestBtn.classList.add('holding');
   ringFill.style.transition = `stroke-dashoffset ${HOLD_MS}ms linear`;
   ringFill.style.strokeDashoffset = '0';
   holdTimer = setTimeout(openChest, HOLD_MS);
 }
 
-function cancelHold() {
-  holding = false;
+// pass a source to cancel only a matching hold; omit it to force-cancel
+function cancelHold(source) {
+  if (source && holdSource && source !== holdSource) return;
+  holdSource = null;
   if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
   chestBtn.classList.remove('holding');
   ringFill.style.transition = 'none';
@@ -331,20 +343,20 @@ function cancelHold() {
 }
 
 // mouse / touch: press and hold on the chest
-chestBtn.addEventListener('pointerdown', (e) => { e.preventDefault(); startHold(); });
-chestBtn.addEventListener('pointerup', cancelHold);
-chestBtn.addEventListener('pointerleave', cancelHold);
-chestBtn.addEventListener('pointercancel', cancelHold);
+chestBtn.addEventListener('pointerdown', (e) => { e.preventDefault(); startHold('pointer'); });
+chestBtn.addEventListener('pointerup', () => cancelHold('pointer'));
+chestBtn.addEventListener('pointerleave', () => cancelHold('pointer'));
+chestBtn.addEventListener('pointercancel', () => cancelHold('pointer'));
 
 // keyboard: hold the physical E key while the contact panel is open (matches the prompt)
 document.addEventListener('keydown', (e) => {
   if ((e.key === 'e' || e.key === 'E') && !e.repeat && contactOpen()) {
     e.preventDefault();
-    startHold();
+    startHold('key');
   }
 });
 document.addEventListener('keyup', (e) => {
-  if (e.key === 'e' || e.key === 'E') cancelHold();
+  if (e.key === 'e' || e.key === 'E') cancelHold('key');
 });
 // Enter / Space activate instantly for assistive tech
 chestBtn.addEventListener('keydown', (e) => {
