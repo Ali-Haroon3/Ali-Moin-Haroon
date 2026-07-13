@@ -35,7 +35,7 @@ let openPanel = null;
 let realMode = false;
 let mapReady = null;
 
-/* ---------- preload the real map while the player sits in the lobby ---------- */
+/* ---------- preload the real map during the boot screens ---------- */
 function preloadMap() {
   mapReady = new Promise((resolve) => {
     const img = new Image();
@@ -46,6 +46,48 @@ function preloadMap() {
   });
 }
 preloadMap();
+
+/* ---------- boot: connecting → loading screen → lobby ---------- */
+const boot = document.getElementById('boot');
+const loadscreen = document.getElementById('loadscreen');
+const loadBg = document.getElementById('loadBg');
+const lobbyBg = document.getElementById('lobbyBg');
+const delay = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function bootFlow() {
+  if (reducedMotion) {
+    boot.remove();
+    loadscreen.remove();
+    lobby.hidden = false;
+    const ok = await mapReady;
+    if (ok) { lobbyBg.src = MAP_URL; lobbyBg.hidden = false; }
+    return;
+  }
+
+  await delay(1200); // CONNECTING…
+  boot.classList.add('leaving');
+  setTimeout(() => boot.remove(), 450);
+
+  loadscreen.hidden = false;
+  let skipped = false;
+  const skip = new Promise((r) => {
+    loadscreen.addEventListener('click', () => { skipped = true; r(); }, { once: true });
+  });
+
+  const ok = await mapReady;
+  if (ok) {
+    loadBg.src = MAP_URL;
+    loadBg.hidden = false;
+    lobbyBg.src = MAP_URL;
+    lobbyBg.hidden = false;
+  }
+  if (!skipped) await Promise.race([delay(2600), skip]);
+
+  loadscreen.classList.add('leaving');
+  setTimeout(() => loadscreen.remove(), 450);
+  lobby.hidden = false;
+}
+bootFlow();
 
 /* ---------- lobby → game ---------- */
 playBtn.addEventListener('click', async () => {
@@ -245,17 +287,49 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-/* ---------- chest (contact) ---------- */
+/* ---------- chest (contact): hold-to-search like the in-game prompt ---------- */
 const chestBtn = document.getElementById('chestBtn');
 const chestLoot = document.querySelector('.chest-loot');
-chestBtn.addEventListener('click', () => {
+const ringFill = document.getElementById('ringFill');
+const HOLD_MS = 850;
+const RING_LEN = 100.5; // 2πr for r=16
+let holdTimer = null;
+
+function openChest() {
   if (chestBtn.classList.contains('open')) return;
+  cancelHold();
   chestBtn.classList.add('open');
   chestBtn.setAttribute('aria-expanded', 'true');
   setTimeout(() => {
     chestLoot.hidden = false;
     burstConfetti(30);
   }, reducedMotion ? 0 : 450);
+}
+
+function beginHold(e) {
+  if (chestBtn.classList.contains('open')) return;
+  if (reducedMotion) { openChest(); return; }
+  e.preventDefault();
+  chestBtn.classList.add('holding');
+  ringFill.style.transition = `stroke-dashoffset ${HOLD_MS}ms linear`;
+  ringFill.style.strokeDashoffset = '0';
+  holdTimer = setTimeout(openChest, HOLD_MS);
+}
+
+function cancelHold() {
+  if (!holdTimer) return;
+  clearTimeout(holdTimer);
+  holdTimer = null;
+  chestBtn.classList.remove('holding');
+  ringFill.style.transition = 'none';
+  ringFill.style.strokeDashoffset = RING_LEN;
+}
+
+chestBtn.addEventListener('pointerdown', beginHold);
+chestBtn.addEventListener('pointerup', cancelHold);
+chestBtn.addEventListener('pointerleave', cancelHold);
+chestBtn.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openChest(); }
 });
 
 /* ---------- victory royale ---------- */

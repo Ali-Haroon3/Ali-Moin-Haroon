@@ -44,6 +44,82 @@ body {
 
 .ico { width: 1.05em; height: 1.05em; vertical-align: -0.18em; }
 
+/* ============ BOOT: CONNECTING ============ */
+.boot {
+  position: fixed; inset: 0; z-index: 80;
+  display: grid; place-items: center; align-content: center; gap: 1.2rem;
+  background: var(--ink);
+  transition: opacity .45s ease;
+}
+.boot.leaving { opacity: 0; pointer-events: none; }
+.boot-spinner {
+  width: 54px; height: 54px; border-radius: 50%;
+  border: 5px solid rgba(255,255,255,.18);
+  border-top-color: #ffffff;
+  animation: boot-spin .9s linear infinite;
+}
+@keyframes boot-spin { to { transform: rotate(360deg); } }
+.boot-text {
+  margin: 0; color: #ffffff; font-weight: 800; letter-spacing: .3em; font-size: .95rem;
+}
+.dots i { font-style: normal; animation: dot-blink 1.2s infinite; }
+.dots i:nth-child(2) { animation-delay: .2s; }
+.dots i:nth-child(3) { animation-delay: .4s; }
+@keyframes dot-blink { 0%, 60%, 100% { opacity: .2; } 30% { opacity: 1; } }
+
+/* ============ LOADING SCREEN ============ */
+.loadscreen {
+  position: fixed; inset: 0; z-index: 70;
+  background: var(--ocean);
+  overflow: hidden;
+  transition: opacity .45s ease;
+  cursor: pointer;
+}
+.loadscreen.leaving { opacity: 0; pointer-events: none; }
+.load-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover;
+  animation: load-pan 24s ease-in-out infinite alternate;
+}
+@keyframes load-pan {
+  from { transform: scale(1.25) translate(2%, -2%); }
+  to { transform: scale(1.25) translate(-2%, 2%); }
+}
+.load-left {
+  position: absolute; top: 0; bottom: 0; left: 0;
+  width: min(560px, 92vw);
+  background: rgba(10, 14, 25, .74);
+  padding: clamp(1.4rem, 4vh, 3rem) clamp(1.4rem, 4vw, 3rem);
+  display: flex; flex-direction: column;
+}
+.load-eyebrow { margin: 0; color: #ffffff; opacity: .85; font-weight: 700; font-size: .95rem; }
+.load-title {
+  margin: .1rem 0 0;
+  font-family: Anton, Inter, sans-serif;
+  font-size: clamp(1.9rem, 5vw, 2.8rem);
+  color: #ffffff; letter-spacing: .02em;
+}
+.load-rules { list-style: none; margin: auto 0; padding: 0; display: grid; gap: clamp(1.2rem, 4vh, 2.4rem); }
+.load-rules li { display: flex; gap: 1.1rem; align-items: flex-start; }
+.rule-dot {
+  flex: 0 0 auto; width: 26px; height: 26px; margin-top: .2rem; border-radius: 50%;
+  background: #ffffff;
+  border: 4px solid rgba(0,0,0,.55);
+  box-shadow: 0 0 0 2px rgba(255,255,255,.25);
+}
+.load-rules h3 { margin: 0; color: #ffffff; font-size: 1.15rem; font-weight: 800; }
+.load-rules p { margin: .3rem 0 0; color: #dfe5f2; font-size: .92rem; line-height: 1.45; }
+.load-status {
+  margin: auto 0 0; color: #ffffff; font-weight: 800; letter-spacing: .22em; font-size: .95rem;
+}
+.load-tip {
+  position: absolute; right: 0; bottom: 0;
+  width: min(640px, 100vw);
+  background: #3c4a9c;
+  color: #ffffff; font-weight: 700; font-size: .92rem;
+  padding: .85rem 1.4rem;
+}
+
 /* ============ LOBBY ============ */
 .lobby {
   position: fixed; inset: 0; z-index: 60;
@@ -52,11 +128,18 @@ body {
   transition: opacity .5s ease, transform .5s ease;
 }
 .lobby.leaving { opacity: 0; transform: scale(1.06); pointer-events: none; }
-/* flat ocean blue (sampled from the map) with two flat darker slashes */
+/* island vista backdrop when the map loaded; flat ocean blue + slashes otherwise */
 .lobby-sky { position: absolute; inset: 0; background: var(--ocean); }
+.lobby-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover;
+  animation: load-pan 30s ease-in-out infinite alternate;
+}
+.lobby-veil { position: absolute; inset: 0; background: rgba(10, 14, 25, .45); }
 .slash { position: absolute; top: -20%; bottom: -20%; background: var(--ocean-deep); transform: rotate(24deg); }
 .slash-1 { left: -6%; width: 34%; }
 .slash-2 { right: -14%; width: 22%; }
+.lobby-bg:not([hidden]) ~ .slash { display: none; }
 
 .lobby-content { position: relative; text-align: center; padding: 1rem; }
 .title-line { display: inline-block; animation: fn-slam .5s cubic-bezier(.2, 1.5, .4, 1) backwards; }
@@ -474,6 +557,44 @@ body {
 .chest-btn.open { animation: none; cursor: default; }
 @keyframes chest-bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
 
+/* golden aura: stacked flat circles, no gradients */
+.chest-aura { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+.chest-aura i {
+  position: absolute; border-radius: 50%;
+  background: #fbd444;
+  animation: aura-pulse 2.4s ease-in-out infinite;
+}
+.chest-aura i:nth-child(1) { width: 210px; height: 150px; opacity: .07; }
+.chest-aura i:nth-child(2) { width: 160px; height: 115px; opacity: .1; animation-delay: .3s; }
+.chest-aura i:nth-child(3) { width: 115px; height: 82px; opacity: .13; animation-delay: .6s; }
+@keyframes aura-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+.chest-btn.open .chest-aura { display: none; }
+
+.chest-idle-sparks rect { animation: spark-rise 2.6s linear infinite; }
+.chest-idle-sparks rect:nth-child(2) { animation-delay: .9s; }
+.chest-idle-sparks rect:nth-child(3) { animation-delay: 1.7s; }
+.chest-btn.open .chest-idle-sparks { display: none; }
+
+/* hold-to-search prompt */
+.chest-prompt {
+  display: inline-flex; align-items: center; gap: .55rem;
+  color: #ffffff; font-family: Inter, sans-serif;
+  font-weight: 800; font-size: .82rem; letter-spacing: .18em;
+}
+.hold-ring { width: 34px; height: 34px; transform: rotate(-90deg); }
+.ring-bg { fill: rgba(16,20,35,.65); stroke: rgba(255,255,255,.3); stroke-width: 4; }
+.ring-fill {
+  fill: none; stroke: var(--yellow); stroke-width: 4; stroke-linecap: butt;
+  stroke-dasharray: 100.5; stroke-dashoffset: 100.5;
+}
+.key-badge {
+  font-style: normal; display: grid; place-items: center;
+  width: 26px; height: 26px; border-radius: 4px;
+  background: #ffffff; color: #101423; font-weight: 800; font-size: .85rem;
+  box-shadow: 2px 2px 0 rgba(6,9,18,.6);
+}
+.chest-btn.open .chest-prompt { visibility: hidden; }
+
 .chest-lid-g {
   transform-box: view-box;
   transform-origin: 30px 96px;
@@ -501,7 +622,6 @@ body {
   25% { opacity: 1; }
   100% { opacity: 0; transform: translateY(-52px); }
 }
-.chest-btn.open > span { visibility: hidden; }
 
 .chest-loot { display: grid; gap: .6rem; justify-items: stretch; width: min(420px, 100%); animation: loot-pop .35s cubic-bezier(.2, 1.4, .4, 1); }
 @keyframes loot-pop {
@@ -577,8 +697,14 @@ body {
   .fan-note { display: none; }
 }
 
+@media (max-width: 720px) {
+  .load-tip { font-size: .8rem; padding: .7rem 1rem; }
+  .load-left { width: 100vw; background: rgba(10, 14, 25, .8); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .compass-strip, .chest-btn, .title-line,
+  .compass-strip, .chest-btn, .title-line, .boot-spinner, .dots i,
+  .load-bg, .lobby-bg, .chest-aura i, .chest-idle-sparks rect,
   .game.live .spot, .chest-sparks rect { animation: none; }
   .chest-lid-g, .chest-beam { transition: none; }
 }

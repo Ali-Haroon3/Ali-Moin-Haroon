@@ -70,9 +70,51 @@
       </defs>
     </svg>
 
-    <!-- ============ LOBBY / LOADING SCREEN ============ -->
-    <div id="lobby" class="lobby">
+    <!-- ============ BOOT: CONNECTING ============ -->
+    <div id="boot" class="boot">
+      <div class="boot-spinner" aria-hidden="true"></div>
+      <p class="boot-text">CONNECTING<span class="dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span></p>
+    </div>
+
+    <!-- ============ LOADING SCREEN ============ -->
+    <div id="loadscreen" class="loadscreen" hidden>
+      <img id="loadBg" class="load-bg" alt="" hidden />
+      <div class="load-left">
+        <p class="load-eyebrow">Solo</p>
+        <h2 class="load-title">BATTLE ROYALE</h2>
+        <ul class="load-rules">
+          <li>
+            <span class="rule-dot" aria-hidden="true"></span>
+            <div>
+              <h3>Drop In &amp; Look Around</h3>
+              <p>Pick a landing spot. Every POI is a piece of my resume.</p>
+            </div>
+          </li>
+          <li>
+            <span class="rule-dot" aria-hidden="true"></span>
+            <div>
+              <h3>Watch the Storm</h3>
+              <p>The circle keeps shrinking. The POIs are worth the trip.</p>
+            </div>
+          </li>
+          <li>
+            <span class="rule-dot" aria-hidden="true"></span>
+            <div>
+              <h3>Clear All Six</h3>
+              <p>Visit every POI on the island to earn the Victory Royale.</p>
+            </div>
+          </li>
+        </ul>
+        <p class="load-status">LOADING<span class="dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span></p>
+      </div>
+      <div class="load-tip">Tip: the chest at Lil' Loot Lake holds the contact info.</div>
+    </div>
+
+    <!-- ============ LOBBY ============ -->
+    <div id="lobby" class="lobby" hidden>
       <div class="lobby-sky">
+        <img id="lobbyBg" class="lobby-bg" alt="" hidden />
+        <div class="lobby-veil"></div>
         <div class="slash slash-1"></div>
         <div class="slash slash-2"></div>
       </div>
@@ -589,7 +631,8 @@
       </header>
       <div class="panel-body">
         <div id="chestZone" class="chest-zone">
-          <button id="chestBtn" class="chest-btn" aria-label="Open the chest" aria-expanded="false">
+          <button id="chestBtn" class="chest-btn" aria-label="Hold to search the chest" aria-expanded="false">
+            <span class="chest-aura" aria-hidden="true"><i></i><i></i><i></i></span>
             <svg viewBox="0 0 200 190" width="220" height="209">
               <!-- golden beam + sparks, revealed on open -->
               <g class="chest-beam">
@@ -622,8 +665,21 @@
                 <rect x="26" y="84" width="148" height="14" fill="#d9a027" stroke="#3f2410" stroke-width="4" />
                 <rect x="88" y="80" width="24" height="20" rx="3" fill="#fbd444" stroke="#3f2410" stroke-width="4" />
               </g>
+              <!-- idle glint -->
+              <g class="chest-idle-sparks">
+                <rect x="52" y="70" width="6" height="6" fill="#fbd444" transform="rotate(45 55 73)" />
+                <rect x="142" y="58" width="7" height="7" fill="#fff200" transform="rotate(45 145 61)" />
+                <rect x="104" y="34" width="5" height="5" fill="#fbd444" transform="rotate(45 106 36)" />
+              </g>
             </svg>
-            <span>TAP TO OPEN</span>
+            <span class="chest-prompt">
+              <svg class="hold-ring" viewBox="0 0 40 40" aria-hidden="true">
+                <circle class="ring-bg" cx="20" cy="20" r="16" />
+                <circle id="ringFill" class="ring-fill" cx="20" cy="20" r="16" />
+              </svg>
+              <em class="key-badge" aria-hidden="true">E</em>
+              <span class="prompt-text">HOLD TO SEARCH</span>
+            </span>
           </button>
           <div class="chest-loot" hidden>
             <a class="panel-btn gold" href="mailto:ali.haroon@colorado.edu"><svg class="ico"><use href="#i-mail" /></svg> ali.haroon@colorado.edu</a>
