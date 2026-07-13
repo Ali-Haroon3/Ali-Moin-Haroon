@@ -59,6 +59,13 @@ body {
 .slash-2 { right: -14%; width: 22%; }
 
 .lobby-content { position: relative; text-align: center; padding: 1rem; }
+.title-line { display: inline-block; animation: fn-slam .5s cubic-bezier(.2, 1.5, .4, 1) backwards; }
+.lobby-title .title-line:last-child { animation-delay: .12s; }
+@keyframes fn-slam {
+  from { transform: scale(2.2); opacity: 0; }
+  70% { transform: scale(.94); opacity: 1; }
+  to { transform: scale(1); }
+}
 .lobby-eyebrow { color: var(--yellow); font-size: clamp(.95rem, 2vw, 1.2rem); margin: 0 0 .4rem; letter-spacing: .1em; }
 .lobby-title {
   font-size: clamp(3.4rem, 12vw, 8rem);
@@ -109,6 +116,34 @@ body {
   position: relative;
   height: 100vh; width: 100vh;
   max-width: 100vw; max-height: 100vw;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+/* ---- drop-in sequence states ---- */
+.game.dropping .hud-top, .game.dropping .hud-right,
+.game.dropping .hud-vitals, .game.dropping .hotbar,
+.game.dropping .fan-note { opacity: 0; }
+.hud-top, .hud-right, .hud-vitals, .hotbar, .fan-note { transition: opacity .5s ease; }
+
+.game.dropping .spot { opacity: 0; pointer-events: none; }
+.game.live .spot { animation: spot-pop .35s cubic-bezier(.2, 1.5, .4, 1) backwards; animation-delay: var(--d, 0s); }
+@keyframes spot-pop {
+  from { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+  70% { transform: translate(-50%, -50%) scale(.92); opacity: 1; }
+  to { transform: translate(-50%, -50%) scale(1); }
+}
+
+.diver-umbrella { opacity: 0; }
+#diver.gliding .diver-umbrella { opacity: 1; }
+#landPulse, #landPulse2 {
+  fill: none; stroke: var(--yellow); stroke-width: 10; opacity: 0;
+}
+#landPulse.landed { animation: land-ring 1s ease-out 2; }
+#landPulse.landed + #landPulse2 { animation: land-ring 1s ease-out .25s 2; }
+@keyframes land-ring {
+  from { opacity: .9; transform: scale(.4); transform-origin: 53% 55%; transform-box: view-box; }
+  to { opacity: 0; transform: scale(2.4); transform-origin: 53% 55%; transform-box: view-box; }
 }
 .map-box img {
   width: 100%; height: 100%; display: block;
@@ -311,6 +346,26 @@ body {
 
 .panel-body { padding: 1.1rem 1.3rem 1.4rem; overflow-y: auto; display: grid; gap: 1rem; }
 
+/* ---- Fortnite-style text animations, retriggered on every panel open ---- */
+.panel.animate .panel-head h2 { animation: fn-slam .45s cubic-bezier(.2, 1.5, .4, 1) backwards; }
+.panel.animate .panel-head p { animation: fn-wipe .55s ease-out .15s backwards; }
+@keyframes fn-wipe {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+.panel.animate .quest, .panel.animate .loot, .panel.animate .aisle,
+.panel.animate .about-card, .panel.animate .chest-zone {
+  animation: fn-rise .4s cubic-bezier(.2, 1.3, .4, 1) backwards;
+}
+.panel.animate > .panel-body > *:nth-child(2) { animation-delay: .08s; }
+.panel.animate > .panel-body > *:nth-child(3) { animation-delay: .16s; }
+.panel.animate > .panel-body > *:nth-child(4) { animation-delay: .24s; }
+.panel.animate > .panel-body > *:nth-child(5) { animation-delay: .32s; }
+@keyframes fn-rise {
+  from { transform: translateY(18px) scale(.97); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
 /* quests (experience/education) */
 .quest {
   padding: 1rem 1.1rem;
@@ -407,16 +462,46 @@ body {
 .inv-note { color: var(--muted); font-size: .8rem; margin: .4rem 0 0; }
 
 /* chest (contact) */
-.chest-zone { display: grid; place-items: center; padding: 1rem 0 .5rem; }
+.chest-zone { display: grid; place-items: center; padding: .4rem 0 .5rem; }
 .chest-btn {
-  display: grid; place-items: center; gap: .4rem;
+  display: grid; place-items: center; gap: .2rem;
   background: none; border: none; cursor: pointer; color: var(--gold);
   font-size: 1rem; letter-spacing: .2em;
   animation: chest-bob 2.2s ease-in-out infinite;
   transition: transform .15s ease;
 }
-.chest-btn:hover { transform: scale(1.06); }
+.chest-btn:hover:not(.open) { transform: scale(1.05); }
+.chest-btn.open { animation: none; cursor: default; }
 @keyframes chest-bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+
+.chest-lid-g {
+  transform-box: view-box;
+  transform-origin: 30px 96px;
+  transition: transform .5s cubic-bezier(.2, 1.4, .4, 1);
+}
+.chest-btn.open .chest-lid-g { transform: rotate(-98deg); }
+
+.chest-beam {
+  opacity: 0;
+  transform-box: view-box;
+  transform-origin: 100px 96px;
+  transform: scaleY(.2);
+  transition: opacity .4s ease .15s, transform .45s cubic-bezier(.2, 1.3, .4, 1) .15s;
+}
+.chest-btn.open .chest-beam { opacity: 1; transform: scaleY(1); }
+
+.chest-sparks rect { opacity: 0; }
+.chest-btn.open .chest-sparks rect { animation: spark-rise 1.6s linear infinite; }
+.chest-btn.open .chest-sparks rect:nth-child(2) { animation-delay: .3s; }
+.chest-btn.open .chest-sparks rect:nth-child(3) { animation-delay: .6s; }
+.chest-btn.open .chest-sparks rect:nth-child(4) { animation-delay: .9s; }
+.chest-btn.open .chest-sparks rect:nth-child(5) { animation-delay: 1.2s; }
+@keyframes spark-rise {
+  0% { opacity: 0; transform: translateY(26px); }
+  25% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-52px); }
+}
+.chest-btn.open > span { visibility: hidden; }
 
 .chest-loot { display: grid; gap: .6rem; justify-items: stretch; width: min(420px, 100%); animation: loot-pop .35s cubic-bezier(.2, 1.4, .4, 1); }
 @keyframes loot-pop {
@@ -493,5 +578,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .compass-strip, .chest-btn { animation: none; }
+  .compass-strip, .chest-btn, .title-line,
+  .game.live .spot, .chest-sparks rect { animation: none; }
+  .chest-lid-g, .chest-beam { transition: none; }
 }

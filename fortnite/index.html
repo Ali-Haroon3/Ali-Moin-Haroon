@@ -78,14 +78,14 @@
       </div>
       <div class="lobby-content">
         <p class="lobby-eyebrow">SEASON 2026 &bull; CHAPTER 2: POST-GRAD</p>
-        <h1 class="lobby-title">ALI<br />HAROON</h1>
+        <h1 class="lobby-title"><span class="title-line">ALI</span><br /><span class="title-line">HAROON</span></h1>
         <p class="lobby-sub">SOFTWARE ENGINEER @ VISA &bull; CO-FOUNDER @ CRONYS &bull; CU BOULDER GRAD</p>
         <button id="playBtn" class="play-btn">
           <span>DROP IN</span>
         </button>
         <a class="lobby-classic" href="../index.html">or switch to Classic Mode</a>
       </div>
-      <div class="lobby-tip">TIP: Drop into a POI to discover a part of Ali. Clear all 6 for a Victory Royale.</div>
+      <div class="lobby-tip">TIP: Hit all 6 POIs for a Victory Royale.</div>
     </div>
 
     <!-- ============ GAME / MAP SCREEN ============ -->
@@ -147,34 +147,47 @@
             </g>
             <circle id="stormReal" cx="2048" cy="2048" r="2400" class="storm-line" />
             <use id="busReal" href="#busShape" width="240" height="320" x="-120" y="-260" opacity="0" />
+            <!-- skydiver for the drop-in sequence -->
+            <g id="diver" opacity="0">
+              <g class="diver-umbrella">
+                <path d="M -60 -55 A 60 60 0 0 1 60 -55 Z" fill="#b04df9" stroke="#7a2fc4" stroke-width="6" />
+                <path d="M -60 -55 L -20 -70 L 20 -70 L 60 -55" fill="none" stroke="#7a2fc4" stroke-width="6" />
+                <line x1="-40" y1="-52" x2="0" y2="0" stroke="#3a2a12" stroke-width="5" />
+                <line x1="40" y1="-52" x2="0" y2="0" stroke="#3a2a12" stroke-width="5" />
+              </g>
+              <circle cx="0" cy="8" r="14" fill="#f2c894" stroke="#101423" stroke-width="4" />
+              <rect x="-12" y="20" width="24" height="34" rx="8" fill="#4f78d9" stroke="#101423" stroke-width="4" />
+            </g>
+            <circle id="landPulse" cx="2171" cy="2253" r="30" />
+            <circle id="landPulse2" cx="2171" cy="2253" r="30" />
           </svg>
           <!-- hotspots: positions read off the Reload map -->
-          <button class="spot" data-poi="experience" style="--x:54.5%; --y:57%">
+          <button class="spot" data-poi="experience" style="--x:54.5%; --y:57%; --d:0s">
             <span class="spot-ring"></span>
             <span class="spot-name">TILTED TOWERS</span>
             <span class="spot-tag">EXPERIENCE</span>
           </button>
-          <button class="spot" data-poi="projects" style="--x:30%; --y:45.5%">
+          <button class="spot" data-poi="projects" style="--x:30%; --y:45.5%; --d:.08s">
             <span class="spot-ring"></span>
             <span class="spot-name">PLEASANT PARK</span>
             <span class="spot-tag">PROJECTS</span>
           </button>
-          <button class="spot" data-poi="skills" style="--x:79%; --y:73.5%">
+          <button class="spot" data-poi="skills" style="--x:79%; --y:73.5%; --d:.16s">
             <span class="spot-ring"></span>
             <span class="spot-name">RETAIL ROW</span>
             <span class="spot-tag">SKILLS</span>
           </button>
-          <button class="spot" data-poi="contact" style="--x:39%; --y:61.5%">
+          <button class="spot" data-poi="contact" style="--x:39%; --y:61.5%; --d:.24s">
             <span class="spot-ring"></span>
             <span class="spot-name">LIL' LOOT LAKE</span>
             <span class="spot-tag">CONTACT</span>
           </button>
-          <button class="spot" data-poi="education" style="--x:72.5%; --y:42.5%">
+          <button class="spot" data-poi="education" style="--x:72.5%; --y:42.5%; --d:.32s">
             <span class="spot-ring"></span>
             <span class="spot-name">SNOBBY SHOALS</span>
             <span class="spot-tag">EDUCATION</span>
           </button>
-          <button class="spot" data-poi="about" style="--x:50%; --y:31.5%">
+          <button class="spot" data-poi="about" style="--x:50%; --y:31.5%; --d:.4s">
             <span class="spot-ring"></span>
             <span class="spot-name">LONE LODGE</span>
             <span class="spot-tag">ABOUT ME</span>
@@ -360,7 +373,7 @@
         <div class="victory-inner">
           <p class="victory-hash">#1</p>
           <p class="victory-title">VICTORY ROYALE</p>
-          <p class="victory-sub">You cleared every POI. Time to recruit Ali.</p>
+          <p class="victory-sub">You found everything. Now hire the guy.</p>
           <a class="panel-btn gold" href="mailto:ali.haroon@colorado.edu">SEND THE INVITE</a>
           <button class="victory-close" id="victoryClose">Keep exploring</button>
         </div>
@@ -446,7 +459,7 @@
       <header class="panel-head">
         <div>
           <h2>PLEASANT PARK</h2>
-          <p>LOOT DROPS: THINGS I BUILT</p>
+          <p>LOOT DROPS: PROJECTS</p>
         </div>
         <button class="panel-close" aria-label="Close"><svg class="ico"><use href="#i-x" /></svg></button>
       </header>
@@ -537,7 +550,6 @@
             <span class="inv uncommon">PyTorch</span>
           </div>
         </div>
-        <p class="inv-note">Aisle color = shelf category, not affection. Every item is kept in stock.</p>
       </div>
     </section>
 
@@ -555,7 +567,7 @@
             <h3>University of Colorado Boulder</h3>
             <span class="rarity-pill">GRADUATED &bull; MAY 2026</span>
           </div>
-          <p class="quest-meta">Boulder, CO &bull; where the tuition went</p>
+          <p class="quest-meta">Boulder, CO &bull; Class of 2026</p>
           <ul class="quest-list">
             <li><svg class="ico check"><use href="#i-check" /></svg> B.S. Computer Science <b class="xp">MAIN CLASS</b></li>
             <li><svg class="ico check"><use href="#i-check" /></svg> Minor: Mathematics <b class="xp">DUAL WIELD</b></li>
@@ -577,11 +589,39 @@
       </header>
       <div class="panel-body">
         <div id="chestZone" class="chest-zone">
-          <button id="chestBtn" class="chest-btn" aria-label="Open the chest">
-            <svg viewBox="0 0 120 90" width="150" height="112">
-              <rect x="12" y="34" width="96" height="48" rx="6" fill="#a8642c" stroke="#6f3f16" stroke-width="4" />
-              <path class="chest-lid" d="M 12 36 Q 60 -8 108 36 Z" fill="#c07a38" stroke="#6f3f16" stroke-width="4" />
-              <rect x="52" y="40" width="16" height="26" rx="3" fill="#fbd444" stroke="#b8860b" stroke-width="3" />
+          <button id="chestBtn" class="chest-btn" aria-label="Open the chest" aria-expanded="false">
+            <svg viewBox="0 0 200 190" width="220" height="209">
+              <!-- golden beam + sparks, revealed on open -->
+              <g class="chest-beam">
+                <polygon points="58,96 142,96 176,0 24,0" fill="#fff200" opacity=".16" />
+                <polygon points="70,96 130,96 152,0 48,0" fill="#fff200" opacity=".22" />
+                <polygon points="84,96 116,96 128,0 72,0" fill="#fff200" opacity=".3" />
+                <g class="chest-sparks">
+                  <rect x="66" y="60" width="7" height="7" fill="#fbd444" transform="rotate(45 69 63)" />
+                  <rect x="98" y="44" width="8" height="8" fill="#fff200" transform="rotate(45 102 48)" />
+                  <rect x="128" y="66" width="6" height="6" fill="#fbd444" transform="rotate(45 131 69)" />
+                  <rect x="84" y="26" width="6" height="6" fill="#fbd444" transform="rotate(45 87 29)" />
+                  <rect x="114" y="16" width="7" height="7" fill="#fff200" transform="rotate(45 117 19)" />
+                </g>
+              </g>
+              <!-- chest body: wood planks with metal trim -->
+              <g class="chest-body">
+                <rect x="30" y="96" width="140" height="66" fill="#7d4a24" stroke="#3f2410" stroke-width="5" />
+                <line x1="34" y1="118" x2="166" y2="118" stroke="#5c3618" stroke-width="4" />
+                <line x1="34" y1="140" x2="166" y2="140" stroke="#5c3618" stroke-width="4" />
+                <rect x="30" y="96" width="14" height="66" fill="#d9a027" stroke="#3f2410" stroke-width="4" />
+                <rect x="156" y="96" width="14" height="66" fill="#d9a027" stroke="#3f2410" stroke-width="4" />
+                <rect x="88" y="96" width="24" height="26" fill="#d9a027" stroke="#3f2410" stroke-width="4" />
+                <circle cx="100" cy="108" r="5" fill="#3f2410" />
+                <path d="M 100 108 L 96 120 L 104 120 Z" fill="#3f2410" />
+              </g>
+              <!-- lid: swings open around the back hinge -->
+              <g class="chest-lid-g">
+                <path d="M 30 96 L 30 68 A 70 42 0 0 1 170 68 L 170 96 Z" fill="#8f5527" stroke="#3f2410" stroke-width="5" />
+                <path d="M 44 96 L 44 60 M 72 96 L 72 48 M 100 96 L 100 44 M 128 96 L 128 48 M 156 96 L 156 60" stroke="#5c3618" stroke-width="4" fill="none" />
+                <rect x="26" y="84" width="148" height="14" fill="#d9a027" stroke="#3f2410" stroke-width="4" />
+                <rect x="88" y="80" width="24" height="20" rx="3" fill="#fbd444" stroke="#3f2410" stroke-width="4" />
+              </g>
             </svg>
             <span>TAP TO OPEN</span>
           </button>
@@ -600,7 +640,7 @@
       <header class="panel-head">
         <div>
           <h2>LONE LODGE</h2>
-          <p>CHARACTER SELECT: WHO IS ALI?</p>
+          <p>CHARACTER SELECT</p>
         </div>
         <button class="panel-close" aria-label="Close"><svg class="ico"><use href="#i-x" /></svg></button>
       </header>
@@ -611,11 +651,11 @@
             <h3>Ali Haroon</h3>
             <p class="quest-meta">Software Engineer @ Visa &bull; Co-Founder @ Cronys &bull; CU Boulder '26</p>
             <p class="about-blurb">
-              I build reliable software systems, data pipelines, and ML-powered products.
-              Right now that means real-time transaction monitoring at Visa and building
-              Cronys, an AI agent governance platform ($25K pre-seed). CU Boulder grad —
-              computer science with math and biochemistry minors. Main drops: backend
-              systems, distributed infrastructure, and anything with a hard problem in the middle.
+              I work on real-time transaction monitoring at Visa and I'm building Cronys,
+              an AI agent governance platform we raised $25K for. Before that: satellite
+              ground stations at Vantor, research data at CUChange, BI at ReportsNow.
+              CU Boulder '26, CS with math and biochem minors. Distributed systems and
+              data pipelines are my thing.
             </p>
             <div class="stat-rows">
               <div class="stat-row"><span>SYSTEMS &amp; INFRA</span><div class="stat-bar"><i style="width:94%"></i></div></div>
