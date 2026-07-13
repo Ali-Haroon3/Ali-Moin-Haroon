@@ -289,6 +289,17 @@ body {
 .spot.visited .spot-ring { background: var(--uncommon); }
 .spot.visited .spot-name { color: var(--gold); }
 
+/* offshore island exit marker */
+.spot-exit { text-decoration: none; }
+.spot-exit .spot-ring { background: var(--rare); }
+.spot-exit:hover .spot-ring, .spot-exit:focus-visible .spot-ring { background: #fff; box-shadow: 0 0 0 3px var(--rare); }
+.spot-exit .spot-tag { color: var(--rare); }
+/* on square/narrow screens the offshore island sits under the minimap — keep the
+   ring but drop its label so the two don't collide */
+@media (max-aspect-ratio: 7 / 5) {
+  .spot-exit .spot-name, .spot-exit .spot-tag { display: none; }
+}
+
 /* fallback map mode */
 .map-wrap { position: absolute; inset: 0; }
 #mapSvg { width: 100%; height: 100%; display: block; }
