@@ -180,7 +180,7 @@
         </div>
         <div class="hud-stats">
           <div class="hud-stat"><svg class="ico"><use href="#i-user" /></svg> 1 recruiter watching</div>
-          <div class="hud-stat"><svg class="ico"><use href="#i-pin" /></svg> <span id="poiCount">0</span>/6 POIs cleared</div>
+          <div class="hud-stat"><svg class="ico"><use href="#i-pin" /></svg> <span id="poiCount">0</span>/7 POIs cleared</div>
         </div>
       </div>
 
@@ -258,6 +258,11 @@
             <span class="spot-ring"></span>
             <span class="spot-name">LONE LODGE</span>
             <span class="spot-tag">ABOUT ME</span>
+          </button>
+          <button class="spot" data-poi="resume" style="--x:87%; --y:14%; --d:.48s">
+            <span class="spot-ring"></span>
+            <span class="spot-name">RÉSUMÉ RIDGE</span>
+            <span class="spot-tag">RESUME</span>
           </button>
         </div>
       </div>
@@ -421,6 +426,11 @@
               <circle cx="200" cy="770" r="90" class="poi-hit" />
               <text x="200" y="880" class="poi-label">LONE LODGE</text>
               <text x="200" y="902" class="poi-tag">ABOUT ME</text>
+            </g>
+            <g class="poi" data-poi="resume" tabindex="0" role="button" aria-label="Résumé Ridge: Resume">
+              <circle cx="1300" cy="235" r="90" class="poi-hit" />
+              <text x="1300" y="320" class="poi-label">RÉSUMÉ RIDGE</text>
+              <text x="1300" y="342" class="poi-tag">RESUME</text>
             </g>
           </g>
 
@@ -731,12 +741,41 @@
             </span>
           </button>
           <div class="chest-loot" hidden>
-            <a class="panel-btn gold" href="Ali_Haroon_Resume.pdf" download="Ali_Haroon_Resume.pdf"><svg class="ico"><use href="#i-download" /></svg> DOWNLOAD RESUME</a>
             <a class="panel-btn gold" href="mailto:ali.haroon@colorado.edu"><svg class="ico"><use href="#i-mail" /></svg> ali.haroon@colorado.edu</a>
             <a class="panel-btn" href="https://github.com/Ali-Haroon3" target="_blank" rel="noreferrer"><svg class="ico"><use href="#i-code" /></svg> github.com/Ali-Haroon3</a>
             <a class="panel-btn" href="https://www.ali-haroon.com" target="_blank" rel="noreferrer"><svg class="ico"><use href="#i-globe" /></svg> ali-haroon.com</a>
             <a class="panel-btn" href="https://cronys.xyz" target="_blank" rel="noreferrer"><svg class="ico"><use href="#i-out" /></svg> cronys.xyz</a>
             <p class="chest-note">US Citizen &bull; Software Engineer @ Visa &bull; Co-Founder @ Cronys</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="resume" hidden aria-label="Resume">
+      <header class="panel-head">
+        <div>
+          <h2>RÉSUMÉ RIDGE</h2>
+          <p>MYTHIC DROP: THE RESUME</p>
+        </div>
+        <button class="panel-close" aria-label="Close"><svg class="ico"><use href="#i-x" /></svg></button>
+      </header>
+      <div class="panel-body">
+        <div class="resume-drop">
+          <div class="resume-doc" aria-hidden="true">
+            <span class="resume-doc-fold"></span>
+            <span class="resume-line l1"></span>
+            <span class="resume-line l2"></span>
+            <span class="resume-line l3"></span>
+            <span class="resume-line l4"></span>
+            <span class="resume-line l5"></span>
+          </div>
+          <div class="resume-copy">
+            <p class="resume-lead">The whole loadout on one page — experience, projects, skills, and education.</p>
+            <div class="resume-actions">
+              <a class="panel-btn gold" href="Ali_Haroon_Resume.pdf" download="Ali_Haroon_Resume.pdf"><svg class="ico"><use href="#i-download" /></svg> DOWNLOAD RESUME (PDF)</a>
+              <a class="panel-btn" href="Ali_Haroon_Resume.pdf" target="_blank" rel="noreferrer"><svg class="ico"><use href="#i-out" /></svg> VIEW IN BROWSER</a>
+            </div>
+            <p class="resume-note">PDF &bull; updated 2026</p>
           </div>
         </div>
       </div>

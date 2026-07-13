@@ -667,6 +667,30 @@ body {
 .stat-bar { height: 10px; border-radius: 2px; background: rgba(255,255,255,.1); overflow: hidden; }
 .stat-bar i { display: block; height: 100%; background: #35b6ff; }
 
+/* resume (Résumé Ridge) */
+.resume-drop { display: flex; gap: 1.4rem; align-items: center; flex-wrap: wrap; }
+.resume-doc {
+  position: relative; flex: 0 0 auto; width: 104px; height: 134px;
+  background: #f4f6fc; border: 3px solid var(--gold); border-radius: 3px;
+  box-shadow: 6px 6px 0 rgba(6, 9, 18, .5);
+  overflow: hidden;
+}
+.resume-doc-fold {
+  position: absolute; top: 0; right: 0; width: 26px; height: 26px;
+  background: var(--panel); clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+.resume-line { position: absolute; left: 14px; height: 7px; border-radius: 2px; background: #b9c2d6; }
+.resume-line.l1 { top: 18px; width: 52px; height: 11px; background: #2b3350; }
+.resume-line.l2 { top: 44px; width: 74px; }
+.resume-line.l3 { top: 60px; width: 60px; }
+.resume-line.l4 { top: 80px; width: 74px; }
+.resume-line.l5 { top: 96px; width: 46px; }
+
+.resume-copy { flex: 1 1 260px; display: flex; flex-direction: column; gap: .8rem; }
+.resume-lead { margin: 0; color: var(--text); font-size: 1.02rem; line-height: 1.5; }
+.resume-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+.resume-note { margin: 0; color: var(--muted); font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; }
+
 /* ============ VICTORY ============ */
 .victory {
   position: fixed; inset: 0; z-index: 50; display: grid; place-items: center;
