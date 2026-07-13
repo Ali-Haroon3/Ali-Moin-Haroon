@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ali Haroon | Drop In</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -67,11 +68,22 @@
           <circle cx="-22" cy="12" r="7" fill="#222" />
           <circle cx="22" cy="12" r="7" fill="#222" />
         </symbol>
+        <!-- AH banner emblem: flat navy tile, gold border, hard offset shadow, skewed letters -->
+        <symbol id="logo-ah" viewBox="0 0 128 128">
+          <path d="M32 12 H96 L116 32 V96 L96 116 H32 L12 96 V32 Z" fill="#0b1020" transform="translate(6,7)" />
+          <path d="M32 12 H96 L116 32 V96 L96 116 H32 L12 96 V32 Z" fill="#17204a" stroke="#fbd444" stroke-width="6" />
+          <path d="M40 22 H88 L106 40 V88 L88 106 H40 L22 88 V40 Z" fill="none" stroke="#b04df9" stroke-width="2.5" opacity="0.7" />
+          <g fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" transform="translate(3,0) skewX(-5)">
+            <path d="M40 86 L52 44 L64 86 M45 71 H59" />
+            <path d="M75 44 V86 M99 44 V86 M75 65 H99" />
+          </g>
+        </symbol>
       </defs>
     </svg>
 
     <!-- ============ BOOT: CONNECTING ============ -->
     <div id="boot" class="boot">
+      <svg class="brand-emblem boot-brand" role="img" aria-label="Ali Haroon"><use href="#logo-ah" /></svg>
       <div class="boot-spinner" aria-hidden="true"></div>
       <p class="boot-text">CONNECTING<span class="dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span></p>
     </div>
@@ -80,6 +92,7 @@
     <div id="loadscreen" class="loadscreen" hidden>
       <img id="loadBg" class="load-bg" alt="" hidden />
       <div class="load-left">
+        <svg class="brand-emblem load-brand" aria-hidden="true"><use href="#logo-ah" /></svg>
         <p class="load-eyebrow">Solo</p>
         <h2 class="load-title">BATTLE ROYALE</h2>
         <ul class="load-rules">
@@ -118,6 +131,7 @@
         <div class="slash slash-1"></div>
         <div class="slash slash-2"></div>
       </div>
+      <svg class="brand-emblem lobby-brand" role="img" aria-label="Ali Haroon"><use href="#logo-ah" /></svg>
       <div class="lobby-content">
         <p class="lobby-eyebrow">SEASON 2026 &bull; CHAPTER 2: POST-GRAD</p>
         <h1 class="lobby-title"><span class="title-line">ALI</span><br /><span class="title-line">HAROON</span></h1>
@@ -132,6 +146,10 @@
 
     <!-- ============ GAME / MAP SCREEN ============ -->
     <div id="game" class="game" hidden>
+      <!-- HUD: brand mark -->
+      <a class="hud-brand" href="../index.html" title="Ali Haroon — Classic Mode">
+        <svg class="brand-emblem" role="img" aria-label="Ali Haroon — Classic Mode"><use href="#logo-ah" /></svg>
+      </a>
       <!-- HUD: top bar -->
       <div class="hud-top">
         <div class="compass" aria-hidden="true">

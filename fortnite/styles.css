@@ -44,6 +44,19 @@ body {
 
 .ico { width: 1.05em; height: 1.05em; vertical-align: -0.18em; }
 
+/* AH banner emblem — the site logo, reused across screens */
+.brand-emblem { display: block; width: 56px; height: 56px; }
+.boot-brand { width: 88px; height: 88px; }
+.load-brand { width: 58px; height: 58px; margin-bottom: .5rem; }
+.lobby-brand { position: absolute; top: 1rem; left: 1.1rem; z-index: 3; width: 74px; height: 74px; }
+.hud-brand {
+  position: absolute; top: .8rem; left: .9rem; z-index: 20; display: block;
+  transition: transform .12s ease;
+}
+.hud-brand .brand-emblem { width: 54px; height: 54px; }
+.hud-brand:hover { transform: translateY(-2px) scale(1.04); }
+.hud-brand:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+
 /* ============ BOOT: CONNECTING ============ */
 .boot {
   position: fixed; inset: 0; z-index: 80;
@@ -697,6 +710,8 @@ body {
   .poi-tag { font-size: 22px; }
   .stat-row { grid-template-columns: 100px 1fr auto; }
   .fan-note { display: none; }
+  .lobby-brand { width: 56px; height: 56px; top: .8rem; left: .8rem; }
+  .hud-brand .brand-emblem { width: 44px; height: 44px; }
 }
 
 @media (max-width: 720px) {
