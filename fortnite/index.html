@@ -13,6 +13,60 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <!-- ============ ICON SPRITE ============ -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs>
+        <symbol id="i-mail" viewBox="0 0 24 24">
+          <rect x="2.5" y="5" width="19" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2" />
+          <path d="M 3.5 7 L 12 13.5 L 20.5 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="i-code" viewBox="0 0 24 24">
+          <path d="M 8.5 7 L 3.5 12 L 8.5 17 M 15.5 7 L 20.5 12 L 15.5 17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M 13.2 5.5 L 10.8 18.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </symbol>
+        <symbol id="i-globe" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2" />
+          <ellipse cx="12" cy="12" rx="4" ry="9" fill="none" stroke="currentColor" stroke-width="1.8" />
+          <path d="M 3.5 12 h 17" stroke="currentColor" stroke-width="1.8" />
+        </symbol>
+        <symbol id="i-pad" viewBox="0 0 24 24">
+          <path d="M 7 8 h 10 a 5 5 0 0 1 5 5 c 0 3 -2 5 -4 4.4 L 15 15.5 H 9 L 6 17.4 C 4 18 2 16 2 13 a 5 5 0 0 1 5 -5 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+          <path d="M 8 11 v 3 M 6.5 12.5 h 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          <circle cx="16" cy="11.6" r="1.1" fill="currentColor" />
+          <circle cx="18.4" cy="13.4" r="1.1" fill="currentColor" />
+        </symbol>
+        <symbol id="i-user" viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2" />
+          <path d="M 4.5 20 a 7.5 6.5 0 0 1 15 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </symbol>
+        <symbol id="i-pin" viewBox="0 0 24 24">
+          <path d="M 12 21.5 C 12 21.5 5 14.5 5 9.5 a 7 7 0 0 1 14 0 C 19 14.5 12 21.5 12 21.5 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+          <circle cx="12" cy="9.5" r="2.6" fill="currentColor" />
+        </symbol>
+        <symbol id="i-check" viewBox="0 0 24 24">
+          <path d="M 4.5 12.5 L 10 18 L 19.5 6.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="i-out" viewBox="0 0 24 24">
+          <path d="M 8 6 h 10 v 10 M 18 6 L 6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="i-x" viewBox="0 0 24 24">
+          <path d="M 6 6 L 18 18 M 18 6 L 6 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" />
+        </symbol>
+        <!-- battle bus, shared by both map modes -->
+        <symbol id="busShape" viewBox="-45 -100 90 120">
+          <path d="M 0 -46 Q -34 -78 0 -92 Q 34 -78 0 -46 Z" fill="#8547e8" stroke="#5a1fd0" stroke-width="3" />
+          <line x1="-14" y1="-52" x2="-10" y2="-24" stroke="#2a2a2a" stroke-width="2.5" />
+          <line x1="14" y1="-52" x2="10" y2="-24" stroke="#2a2a2a" stroke-width="2.5" />
+          <rect x="-38" y="-24" width="76" height="34" rx="8" fill="#4f78d9" stroke="#2d4fa3" stroke-width="3" />
+          <rect x="-30" y="-16" width="14" height="12" rx="2" fill="#cfe6ff" />
+          <rect x="-9" y="-16" width="14" height="12" rx="2" fill="#cfe6ff" />
+          <rect x="12" y="-16" width="14" height="12" rx="2" fill="#cfe6ff" />
+          <circle cx="-22" cy="12" r="7" fill="#222" />
+          <circle cx="22" cy="12" r="7" fill="#222" />
+        </symbol>
+      </defs>
+    </svg>
+
     <!-- ============ LOBBY / LOADING SCREEN ============ -->
     <div id="lobby" class="lobby">
       <div class="lobby-sky"></div>
@@ -25,7 +79,7 @@
         </button>
         <a class="lobby-classic" href="../index.html">or switch to Classic Mode</a>
       </div>
-      <div class="lobby-tip">TIP: Click a POI on the map to discover a part of Ali. Find all 6 for a Victory Royale.</div>
+      <div class="lobby-tip">TIP: Drop into a POI to discover a part of Ali. Clear all 6 for a Victory Royale.</div>
     </div>
 
     <!-- ============ GAME / MAP SCREEN ============ -->
@@ -43,14 +97,17 @@
       <!-- HUD: right column -->
       <div class="hud-right">
         <div class="minimap" aria-hidden="true">
-          <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+          <img id="miniImg" alt="" hidden />
+          <svg id="miniFallback" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
             <use href="#islandArt" />
-            <circle id="miniStorm" cx="800" cy="500" r="620" class="storm-ring" />
+          </svg>
+          <svg class="mini-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <circle id="miniStorm" cx="50" cy="50" r="46" />
           </svg>
         </div>
         <div class="hud-stats">
-          <div class="hud-stat"><span class="hud-ico">👤</span> 1 recruiter watching</div>
-          <div class="hud-stat"><span class="hud-ico">📍</span> <span id="poiCount">0</span>/6 POIs discovered</div>
+          <div class="hud-stat"><svg class="ico"><use href="#i-user" /></svg> 1 recruiter watching</div>
+          <div class="hud-stat"><svg class="ico"><use href="#i-pin" /></svg> <span id="poiCount">0</span>/6 POIs cleared</div>
         </div>
       </div>
 
@@ -62,38 +119,62 @@
 
       <!-- HUD: bottom right hotbar -->
       <div class="hotbar">
-        <a class="slot" href="mailto:ali.haroon@colorado.edu" title="Email Ali">✉️<em>Email</em></a>
-        <a class="slot" href="https://github.com/Ali-Haroon3" target="_blank" rel="noreferrer" title="GitHub">🐙<em>GitHub</em></a>
-        <a class="slot" href="https://www.ali-haroon.com" target="_blank" rel="noreferrer" title="Main site">🌐<em>Site</em></a>
-        <a class="slot" href="../index.html" title="Classic portfolio">🕹️<em>Classic</em></a>
+        <a class="slot" href="mailto:ali.haroon@colorado.edu" title="Email Ali"><svg class="ico"><use href="#i-mail" /></svg><em>Email</em></a>
+        <a class="slot" href="https://github.com/Ali-Haroon3" target="_blank" rel="noreferrer" title="GitHub"><svg class="ico"><use href="#i-code" /></svg><em>GitHub</em></a>
+        <a class="slot" href="https://www.ali-haroon.com" target="_blank" rel="noreferrer" title="Main site"><svg class="ico"><use href="#i-globe" /></svg><em>Site</em></a>
+        <a class="slot" href="../index.html" title="Classic portfolio"><svg class="ico"><use href="#i-pad" /></svg><em>Classic</em></a>
       </div>
 
-      <!-- ============ THE ISLAND MAP ============ -->
-      <div class="map-wrap">
+      <!-- ============ REAL MAP MODE (Season 7 island via fortnite-archives) ============ -->
+      <div id="realStage" class="real-stage" hidden>
+        <div class="map-box">
+          <img id="mapImg" alt="Fortnite Chapter 1 Season 7 island map" draggable="false" />
+          <svg class="map-overlay" viewBox="0 0 4096 4096" preserveAspectRatio="none" aria-hidden="true">
+            <circle id="stormReal" cx="2048" cy="2048" r="2400" class="storm-line" />
+            <use id="busReal" href="#busShape" width="240" height="320" x="-120" y="-260" opacity="0" />
+          </svg>
+          <!-- hotspots: positions read off the 4096px map -->
+          <button class="spot" data-poi="experience" style="--x:37.5%; --y:48%">
+            <span class="spot-ring"></span>
+            <span class="spot-name">TILTED TOWERS</span>
+            <span class="spot-tag">EXPERIENCE</span>
+          </button>
+          <button class="spot" data-poi="projects" style="--x:26.5%; --y:29%">
+            <span class="spot-ring"></span>
+            <span class="spot-name">PLEASANT PARK</span>
+            <span class="spot-tag">PROJECTS</span>
+          </button>
+          <button class="spot" data-poi="skills" style="--x:52.5%; --y:61%">
+            <span class="spot-ring"></span>
+            <span class="spot-name">SALTY SPRINGS</span>
+            <span class="spot-tag">SKILLS</span>
+          </button>
+          <button class="spot" data-poi="contact" style="--x:43%; --y:37%">
+            <span class="spot-ring"></span>
+            <span class="spot-name">LOOT LAKE</span>
+            <span class="spot-tag">CONTACT</span>
+          </button>
+          <button class="spot" data-poi="education" style="--x:14%; --y:52.8%">
+            <span class="spot-ring"></span>
+            <span class="spot-name">POLAR PEAK</span>
+            <span class="spot-tag">EDUCATION</span>
+          </button>
+          <button class="spot" data-poi="about" style="--x:71%; --y:19%">
+            <span class="spot-ring"></span>
+            <span class="spot-name">RISKY REELS</span>
+            <span class="spot-tag">ABOUT ME</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ============ FALLBACK MAP (original artwork, used if the real map can't load) ============ -->
+      <div id="fallbackStage" class="map-wrap" hidden>
         <svg id="mapSvg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid meet" role="group" aria-label="Island map of Ali's portfolio">
           <defs>
-            <radialGradient id="oceanGrad" cx="50%" cy="45%" r="75%">
-              <stop offset="0%" stop-color="#2e9fd9" />
-              <stop offset="70%" stop-color="#1b6fb5" />
-              <stop offset="100%" stop-color="#124f8c" />
-            </radialGradient>
-            <linearGradient id="grassGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#8ecf62" />
-              <stop offset="100%" stop-color="#6fb04a" />
-            </linearGradient>
-            <linearGradient id="towerGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#b9c6d8" />
-              <stop offset="100%" stop-color="#8494ab" />
-            </linearGradient>
-            <linearGradient id="stormGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#b44ee8" />
-              <stop offset="100%" stop-color="#7b2ff7" />
-            </linearGradient>
             <filter id="dropSh" x="-20%" y="-20%" width="140%" height="140%">
               <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#0a2a4a" flood-opacity="0.35" />
             </filter>
 
-            <!-- Reusable tree -->
             <g id="tree">
               <rect x="-3" y="6" width="6" height="10" rx="2" fill="#8a5a33" />
               <circle cx="0" cy="0" r="12" fill="#3f8f3d" />
@@ -101,14 +182,11 @@
               <circle cx="8" cy="6" r="8" fill="#4aa348" />
             </g>
 
-            <!-- The island artwork, reused by the minimap -->
             <g id="islandArt">
-              <rect x="0" y="0" width="1600" height="1000" fill="url(#oceanGrad)" />
-              <!-- wave rings -->
+              <rect x="0" y="0" width="1600" height="1000" fill="#1f7ac9" />
               <circle cx="800" cy="500" r="560" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="18" />
               <circle cx="800" cy="500" r="640" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="14" />
 
-              <!-- main island: sand then grass -->
               <path d="M 380 300
                        C 420 180, 620 120, 800 150
                        C 980 175, 1180 190, 1280 320
@@ -124,30 +202,26 @@
                        C 1128 800, 962 866, 800 848
                        C 634 830, 500 790, 424 672
                        C 350 552, 368 428, 410 320 Z"
-                    fill="url(#grassGrad)" />
+                    fill="#79b74f" />
 
-              <!-- spawn island (offshore) -->
               <ellipse cx="200" cy="775" rx="105" ry="72" fill="#e8d29a" />
-              <ellipse cx="200" cy="770" rx="88" ry="58" fill="url(#grassGrad)" />
+              <ellipse cx="200" cy="770" rx="88" ry="58" fill="#79b74f" />
 
-              <!-- lake -->
               <path d="M 1000 350 C 1060 320, 1160 330, 1190 390 C 1220 450, 1180 510, 1110 520 C 1035 530, 970 490, 965 435 C 962 395, 965 370, 1000 350 Z"
                     fill="#2e9fd9" stroke="#e8d29a" stroke-width="8" />
               <ellipse cx="1080" cy="428" rx="26" ry="16" fill="#e8d29a" />
 
-              <!-- river from lake to south shore -->
               <path d="M 990 470 C 940 560, 950 640, 905 700 C 870 748, 850 790, 845 850"
                     fill="none" stroke="#2e9fd9" stroke-width="20" stroke-linecap="round" />
 
-              <!-- roads -->
-              <g fill="none" stroke="#d9c48f" stroke-width="14" stroke-linecap="round" stroke-dasharray="none" opacity="0.9">
+              <g fill="none" stroke="#d9c48f" stroke-width="14" stroke-linecap="round" opacity="0.9">
                 <path d="M 620 290 C 680 360, 740 430, 800 505" />
                 <path d="M 800 505 C 900 560, 900 660, 905 730" />
                 <path d="M 800 505 C 890 480, 960 460, 1035 445" />
                 <path d="M 360 400 C 460 430, 640 480, 780 510" />
               </g>
 
-              <!-- Boulder Bluffs mountains -->
+              <!-- Polar Peak mountains -->
               <g transform="translate(330,370)">
                 <path d="M -80 60 L -10 -70 L 55 60 Z" fill="#9aa7b8" />
                 <path d="M -10 -70 L -34 -20 L 14 -20 Z" fill="#f2f6fa" />
@@ -155,7 +229,7 @@
                 <path d="M 70 -35 L 52 0 L 88 0 Z" fill="#eef3f8" />
               </g>
 
-              <!-- Pleasant Projects houses -->
+              <!-- Pleasant Park houses -->
               <g transform="translate(620,235)">
                 <g filter="url(#dropSh)">
                   <rect x="-55" y="0" width="44" height="34" fill="#e5eef7" />
@@ -165,12 +239,12 @@
                 </g>
               </g>
 
-              <!-- Tilted Tech Towers -->
+              <!-- Tilted Towers -->
               <g transform="translate(800,500)" filter="url(#dropSh)">
-                <rect x="-58" y="-70" width="34" height="88" fill="url(#towerGrad)" transform="rotate(-4 -41 -26)" />
-                <rect x="-14" y="-98" width="40" height="116" fill="url(#towerGrad)" />
-                <rect x="34" y="-58" width="30" height="76" fill="url(#towerGrad)" transform="rotate(4 49 -20)" />
-                <g fill="#ffd54d">
+                <rect x="-58" y="-70" width="34" height="88" fill="#9fb0c4" transform="rotate(-4 -41 -26)" />
+                <rect x="-14" y="-98" width="40" height="116" fill="#9fb0c4" />
+                <rect x="34" y="-58" width="30" height="76" fill="#9fb0c4" transform="rotate(4 49 -20)" />
+                <g fill="#ffd21f">
                   <rect x="-8" y="-88" width="8" height="8" /><rect x="8" y="-88" width="8" height="8" />
                   <rect x="-8" y="-68" width="8" height="8" /><rect x="8" y="-48" width="8" height="8" />
                   <rect x="-52" y="-58" width="7" height="7" /><rect x="-40" y="-38" width="7" height="7" />
@@ -178,7 +252,7 @@
                 </g>
               </g>
 
-              <!-- Salty Skills Springs -->
+              <!-- Salty Springs -->
               <g transform="translate(905,755)">
                 <ellipse cx="-30" cy="10" rx="26" ry="14" fill="#57c7e8" stroke="#e8d29a" stroke-width="5" />
                 <ellipse cx="34" cy="-4" rx="20" ry="11" fill="#57c7e8" stroke="#e8d29a" stroke-width="5" />
@@ -192,10 +266,9 @@
               <g transform="translate(1080,420)" filter="url(#dropSh)">
                 <rect x="-16" y="-10" width="32" height="20" rx="3" fill="#a8642c" />
                 <path d="M -16 -10 Q 0 -26 16 -10 Z" fill="#c07a38" />
-                <rect x="-3" y="-8" width="6" height="16" fill="#ffd54d" />
+                <rect x="-3" y="-8" width="6" height="16" fill="#ffd21f" />
               </g>
 
-              <!-- trees scattered -->
               <use href="#tree" transform="translate(520,560)" />
               <use href="#tree" transform="translate(700,660) scale(0.85)" />
               <use href="#tree" transform="translate(1150,610) scale(0.9)" />
@@ -205,78 +278,75 @@
               <use href="#tree" transform="translate(450,520) scale(0.75)" />
               <use href="#tree" transform="translate(1100,700) scale(0.8)" />
 
-              <!-- spawn island props -->
-              <use href="#tree" transform="translate(170,750) scale(0.7)" />
-              <g transform="translate(228,764)">
-                <rect x="-2" y="-34" width="4" height="34" fill="#8a5a33" />
-                <path d="M 2 -34 L 34 -26 L 2 -18 Z" fill="#4f78d9" />
+              <!-- Risky Reels drive-in island -->
+              <use href="#tree" transform="translate(160,745) scale(0.7)" />
+              <g transform="translate(215,760)" filter="url(#dropSh)">
+                <rect x="-4" y="-4" width="4" height="18" fill="#8a5a33" />
+                <rect x="28" y="-4" width="4" height="18" fill="#8a5a33" />
+                <rect x="-8" y="-34" width="44" height="32" fill="#f2f6fa" stroke="#39435a" stroke-width="3" />
+                <rect x="6" y="20" width="7" height="5" fill="#d94f4f" />
+                <rect x="18" y="22" width="7" height="5" fill="#4f78d9" />
               </g>
             </g>
           </defs>
 
-          <!-- visible map -->
           <use href="#islandArt" />
 
-          <!-- storm circle -->
           <g class="storm">
-            <circle id="stormCircle" cx="800" cy="500" r="620" fill="none" stroke="url(#stormGrad)" stroke-width="10" opacity="0.85" />
+            <circle id="stormCircle" cx="800" cy="500" r="620" class="storm-line" />
           </g>
 
-          <!-- ============ CLICKABLE POI HOTSPOTS ============ -->
           <g id="poiLayer">
-            <g class="poi" data-poi="education" tabindex="0" role="button" aria-label="Boulder Bluffs: Education">
+            <g class="poi" data-poi="education" tabindex="0" role="button" aria-label="Polar Peak: Education">
               <circle cx="345" cy="395" r="95" class="poi-hit" />
-              <text x="345" y="475" class="poi-label">BOULDER BLUFFS</text>
+              <text x="345" y="475" class="poi-label">POLAR PEAK</text>
               <text x="345" y="497" class="poi-tag">EDUCATION</text>
             </g>
-            <g class="poi" data-poi="projects" tabindex="0" role="button" aria-label="Pleasant Projects: Projects">
+            <g class="poi" data-poi="projects" tabindex="0" role="button" aria-label="Pleasant Park: Projects">
               <circle cx="630" cy="245" r="85" class="poi-hit" />
-              <text x="630" y="330" class="poi-label">PLEASANT PROJECTS</text>
+              <text x="630" y="330" class="poi-label">PLEASANT PARK</text>
               <text x="630" y="352" class="poi-tag">PROJECTS</text>
             </g>
-            <g class="poi" data-poi="experience" tabindex="0" role="button" aria-label="Tilted Tech Towers: Experience">
+            <g class="poi" data-poi="experience" tabindex="0" role="button" aria-label="Tilted Towers: Experience">
               <circle cx="800" cy="470" r="100" class="poi-hit" />
-              <text x="800" y="580" class="poi-label">TILTED TECH TOWERS</text>
+              <text x="800" y="580" class="poi-label">TILTED TOWERS</text>
               <text x="800" y="602" class="poi-tag">EXPERIENCE</text>
             </g>
-            <g class="poi" data-poi="contact" tabindex="0" role="button" aria-label="Loot Lake Links: Contact">
+            <g class="poi" data-poi="contact" tabindex="0" role="button" aria-label="Loot Lake: Contact">
               <circle cx="1080" cy="425" r="90" class="poi-hit" />
-              <text x="1080" y="530" class="poi-label">LOOT LAKE LINKS</text>
+              <text x="1080" y="530" class="poi-label">LOOT LAKE</text>
               <text x="1080" y="552" class="poi-tag">CONTACT</text>
             </g>
-            <g class="poi" data-poi="skills" tabindex="0" role="button" aria-label="Salty Skills Springs: Skills">
+            <g class="poi" data-poi="skills" tabindex="0" role="button" aria-label="Salty Springs: Skills">
               <circle cx="905" cy="745" r="90" class="poi-hit" />
-              <text x="905" y="840" class="poi-label">SALTY SKILLS SPRINGS</text>
+              <text x="905" y="840" class="poi-label">SALTY SPRINGS</text>
               <text x="905" y="862" class="poi-tag">SKILLS</text>
             </g>
-            <g class="poi" data-poi="about" tabindex="0" role="button" aria-label="Spawn Island: About Ali">
+            <g class="poi" data-poi="about" tabindex="0" role="button" aria-label="Risky Reels: About Ali">
               <circle cx="200" cy="770" r="90" class="poi-hit" />
-              <text x="200" y="880" class="poi-label">SPAWN ISLAND</text>
+              <text x="200" y="880" class="poi-label">RISKY REELS</text>
               <text x="200" y="902" class="poi-tag">ABOUT ME</text>
             </g>
           </g>
 
-          <!-- battle bus -->
-          <g id="battleBus" class="battle-bus" aria-hidden="true">
-            <path d="M 0 -46 Q -34 -78 0 -92 Q 34 -78 0 -46 Z" fill="#7b2ff7" stroke="#5a1fd0" stroke-width="3" />
-            <line x1="-14" y1="-52" x2="-10" y2="-24" stroke="#333" stroke-width="2.5" />
-            <line x1="14" y1="-52" x2="10" y2="-24" stroke="#333" stroke-width="2.5" />
-            <rect x="-38" y="-24" width="76" height="34" rx="8" fill="#4f78d9" stroke="#2d4fa3" stroke-width="3" />
-            <rect x="-30" y="-16" width="14" height="12" rx="2" fill="#cfe6ff" />
-            <rect x="-9" y="-16" width="14" height="12" rx="2" fill="#cfe6ff" />
-            <rect x="12" y="-16" width="14" height="12" rx="2" fill="#cfe6ff" />
-            <circle cx="-22" cy="12" r="7" fill="#222" /><circle cx="22" cy="12" r="7" fill="#222" />
-          </g>
+          <use id="busFallback" href="#busShape" width="90" height="120" x="-45" y="-100" opacity="0" />
         </svg>
       </div>
+
+      <!-- Epic fan-content attribution (required for fan projects using Epic assets) -->
+      <p class="fan-note">
+        Fan-made portfolio. Portions of the materials used are trademarks and/or copyrighted works of Epic Games, Inc.
+        All rights reserved by Epic. This material is not official and is not endorsed by Epic.
+        Map imagery via <a href="https://github.com/yaelbrinkert/fortnite-archives" target="_blank" rel="noreferrer">fortnite-archives</a>.
+      </p>
 
       <!-- Victory banner -->
       <div id="victory" class="victory" hidden>
         <div class="victory-inner">
           <p class="victory-hash">#1</p>
           <p class="victory-title">VICTORY ROYALE</p>
-          <p class="victory-sub">You discovered every POI. Time to recruit Ali.</p>
-          <a class="panel-btn gold" href="mailto:ali.haroon@colorado.edu">SEND THE INVITE ✉️</a>
+          <p class="victory-sub">You cleared every POI. Time to recruit Ali.</p>
+          <a class="panel-btn gold" href="mailto:ali.haroon@colorado.edu">SEND THE INVITE</a>
           <button class="victory-close" id="victoryClose">Keep exploring</button>
         </div>
       </div>
@@ -288,10 +358,10 @@
     <section class="panel" data-panel="experience" hidden aria-label="Experience">
       <header class="panel-head">
         <div>
-          <h2>TILTED TECH TOWERS</h2>
+          <h2>TILTED TOWERS</h2>
           <p>QUESTLINE: WORK EXPERIENCE</p>
         </div>
-        <button class="panel-close" aria-label="Close">✕</button>
+        <button class="panel-close" aria-label="Close"><svg class="ico"><use href="#i-x" /></svg></button>
       </header>
       <div class="panel-body">
         <article class="quest legendary">
@@ -301,10 +371,10 @@
           </div>
           <p class="quest-meta">Westminster, CO &bull; Jun 2025 – Aug 2025</p>
           <ul class="quest-list">
-            <li><span class="check">✔</span> Engineered distributed infrastructure for 6 satellite ground-station monitoring environments with Java + Kubernetes <b class="xp">−30% incident response time</b></li>
-            <li><span class="check">✔</span> Built observability dashboards with Grafana, Prometheus, and Java collectors <b class="xp">35 production services</b></li>
-            <li><span class="check">✔</span> Designed automated testing workflows for 15+ Linux microservices with Jenkins CI/CD <b class="xp">+10,000 XP</b></li>
-            <li><span class="check">✔</span> Implemented Spring Boot APIs for low-latency inference <b class="xp">1K+ req/min</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Engineered distributed infrastructure for 6 satellite ground-station monitoring environments with Java + Kubernetes <b class="xp">−30% incident response time</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Built observability dashboards with Grafana, Prometheus, and Java collectors <b class="xp">35 production services</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Designed automated testing workflows for 15+ Linux microservices with Jenkins CI/CD <b class="xp">+10,000 XP</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Implemented Spring Boot APIs for low-latency inference <b class="xp">1K+ req/min</b></li>
           </ul>
         </article>
 
@@ -315,9 +385,9 @@
           </div>
           <p class="quest-meta">Boulder, CO &bull; Jul 2025 – Present</p>
           <ul class="quest-list">
-            <li><span class="check">✔</span> Developed full-stack Django apps with PostgreSQL on GCP <b class="xp">50K+ research records</b></li>
-            <li><span class="check">✔</span> Built automated pipelines with Python, pandas, and the REDCap API for large-scale cleaning + transformation <b class="xp">+8,000 XP</b></li>
-            <li><span class="check">✔</span> Designed migration &amp; reporting workflows <b class="xp">+300% processing speed</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Developed full-stack Django apps with PostgreSQL on GCP <b class="xp">50K+ research records</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Built automated pipelines with Python, pandas, and the REDCap API for large-scale cleaning + transformation <b class="xp">+8,000 XP</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Designed migration &amp; reporting workflows <b class="xp">+300% processing speed</b></li>
           </ul>
         </article>
 
@@ -328,9 +398,9 @@
           </div>
           <p class="quest-meta">Greenwood Village, CO &bull; May 2024 – Jul 2024</p>
           <ul class="quest-list">
-            <li><span class="check">✔</span> Built a BI platform with C#, ASP.NET Core, and React <b class="xp">125+ client systems</b></li>
-            <li><span class="check">✔</span> Optimized a SQL Server analytics stack with Entity Framework <b class="xp">500+ daily queries</b></li>
-            <li><span class="check">✔</span> Implemented Azure DevOps + Docker CI/CD in Agile/SCRUM workflows <b class="xp">+6,000 XP</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Built a BI platform with C#, ASP.NET Core, and React <b class="xp">125+ client systems</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Optimized a SQL Server analytics stack with Entity Framework <b class="xp">500+ daily queries</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Implemented Azure DevOps + Docker CI/CD in Agile/SCRUM workflows <b class="xp">+6,000 XP</b></li>
           </ul>
         </article>
       </div>
@@ -339,10 +409,10 @@
     <section class="panel" data-panel="projects" hidden aria-label="Projects">
       <header class="panel-head">
         <div>
-          <h2>PLEASANT PROJECTS</h2>
+          <h2>PLEASANT PARK</h2>
           <p>LOOT DROPS: THINGS I BUILT</p>
         </div>
-        <button class="panel-close" aria-label="Close">✕</button>
+        <button class="panel-close" aria-label="Close"><svg class="ico"><use href="#i-x" /></svg></button>
       </header>
       <div class="panel-body loot-grid">
         <article class="loot legendary">
@@ -350,21 +420,21 @@
           <h3>Polymarket Weather Prediction</h3>
           <p>Prediction-market weather model trading on real Polymarket data.</p>
           <p class="loot-stack">Rust &bull; Python &bull; NumPy &bull; pandas &bull; Scikit-learn &bull; PostgreSQL</p>
-          <a class="panel-btn" href="https://github.com/Ali-Haroon3/Polymarket-Weather-Predictor" target="_blank" rel="noreferrer">INSPECT ON GITHUB ↗</a>
+          <a class="panel-btn" href="https://github.com/Ali-Haroon3/Polymarket-Weather-Predictor" target="_blank" rel="noreferrer">INSPECT ON GITHUB <svg class="ico"><use href="#i-out" /></svg></a>
         </article>
         <article class="loot epic">
           <span class="rarity-pill">EPIC</span>
           <h3>BlackjackTrainer</h3>
           <p>AI-assisted blackjack strategy trainer, deployed on AWS.</p>
           <p class="loot-stack">Python &bull; Flask &bull; JavaScript &bull; AWS</p>
-          <a class="panel-btn" href="https://github.com/Ali-Haroon3/AIBlackJackTrainer" target="_blank" rel="noreferrer">INSPECT ON GITHUB ↗</a>
+          <a class="panel-btn" href="https://github.com/Ali-Haroon3/AIBlackJackTrainer" target="_blank" rel="noreferrer">INSPECT ON GITHUB <svg class="ico"><use href="#i-out" /></svg></a>
         </article>
         <article class="loot epic">
           <span class="rarity-pill">EPIC</span>
           <h3>Lung Cancer Detection</h3>
           <p>Deep-learning imaging classifier with an interactive Streamlit front end.</p>
           <p class="loot-stack">Python &bull; TensorFlow &bull; Streamlit &bull; PostgreSQL</p>
-          <a class="panel-btn" href="https://github.com/Ali-Haroon3/Lung-Cancer-Detection" target="_blank" rel="noreferrer">INSPECT ON GITHUB ↗</a>
+          <a class="panel-btn" href="https://github.com/Ali-Haroon3/Lung-Cancer-Detection" target="_blank" rel="noreferrer">INSPECT ON GITHUB <svg class="ico"><use href="#i-out" /></svg></a>
         </article>
       </div>
     </section>
@@ -372,10 +442,10 @@
     <section class="panel" data-panel="skills" hidden aria-label="Skills">
       <header class="panel-head">
         <div>
-          <h2>SALTY SKILLS SPRINGS</h2>
+          <h2>SALTY SPRINGS</h2>
           <p>LOCKER: EQUIPPED SKILLS</p>
         </div>
-        <button class="panel-close" aria-label="Close">✕</button>
+        <button class="panel-close" aria-label="Close"><svg class="ico"><use href="#i-x" /></svg></button>
       </header>
       <div class="panel-body">
         <div class="inv-grid">
@@ -404,10 +474,10 @@
     <section class="panel" data-panel="education" hidden aria-label="Education">
       <header class="panel-head">
         <div>
-          <h2>BOULDER BLUFFS</h2>
+          <h2>POLAR PEAK</h2>
           <p>TRAINING GROUNDS: EDUCATION</p>
         </div>
-        <button class="panel-close" aria-label="Close">✕</button>
+        <button class="panel-close" aria-label="Close"><svg class="ico"><use href="#i-x" /></svg></button>
       </header>
       <div class="panel-body">
         <article class="quest legendary">
@@ -415,11 +485,11 @@
             <h3>University of Colorado Boulder</h3>
             <span class="rarity-pill">SENIOR &bull; LEVEL 4/4</span>
           </div>
-          <p class="quest-meta">Boulder, CO &bull; the real Boulder Bluffs</p>
+          <p class="quest-meta">Boulder, CO &bull; the Flatirons are basically Polar Peak</p>
           <ul class="quest-list">
-            <li><span class="check">✔</span> B.S. Computer Science <b class="xp">MAIN CLASS</b></li>
-            <li><span class="check">✔</span> Mathematics <b class="xp">DUAL WIELD</b></li>
-            <li><span class="check">✔</span> Biochemistry <b class="xp">THIRD SLOT</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> B.S. Computer Science <b class="xp">MAIN CLASS</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Mathematics <b class="xp">DUAL WIELD</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Biochemistry <b class="xp">THIRD SLOT</b></li>
           </ul>
           <div class="xp-bar"><div class="xp-fill"></div><span>SEASON PROGRESS: SENIOR YEAR</span></div>
         </article>
@@ -429,10 +499,10 @@
     <section class="panel" data-panel="contact" hidden aria-label="Contact">
       <header class="panel-head">
         <div>
-          <h2>LOOT LAKE LINKS</h2>
+          <h2>LOOT LAKE</h2>
           <p>OPEN THE CHEST: CONTACT ALI</p>
         </div>
-        <button class="panel-close" aria-label="Close">✕</button>
+        <button class="panel-close" aria-label="Close"><svg class="ico"><use href="#i-x" /></svg></button>
       </header>
       <div class="panel-body">
         <div id="chestZone" class="chest-zone">
@@ -440,14 +510,14 @@
             <svg viewBox="0 0 120 90" width="150" height="112">
               <rect x="12" y="34" width="96" height="48" rx="6" fill="#a8642c" stroke="#6f3f16" stroke-width="4" />
               <path class="chest-lid" d="M 12 36 Q 60 -8 108 36 Z" fill="#c07a38" stroke="#6f3f16" stroke-width="4" />
-              <rect x="52" y="40" width="16" height="26" rx="3" fill="#ffd54d" stroke="#b8860b" stroke-width="3" />
+              <rect x="52" y="40" width="16" height="26" rx="3" fill="#ffd21f" stroke="#b8860b" stroke-width="3" />
             </svg>
             <span>TAP TO OPEN</span>
           </button>
           <div class="chest-loot" hidden>
-            <a class="panel-btn gold" href="mailto:ali.haroon@colorado.edu">✉️ ali.haroon@colorado.edu</a>
-            <a class="panel-btn" href="https://github.com/Ali-Haroon3" target="_blank" rel="noreferrer">🐙 github.com/Ali-Haroon3</a>
-            <a class="panel-btn" href="https://www.ali-haroon.com" target="_blank" rel="noreferrer">🌐 ali-haroon.com</a>
+            <a class="panel-btn gold" href="mailto:ali.haroon@colorado.edu"><svg class="ico"><use href="#i-mail" /></svg> ali.haroon@colorado.edu</a>
+            <a class="panel-btn" href="https://github.com/Ali-Haroon3" target="_blank" rel="noreferrer"><svg class="ico"><use href="#i-code" /></svg> github.com/Ali-Haroon3</a>
+            <a class="panel-btn" href="https://www.ali-haroon.com" target="_blank" rel="noreferrer"><svg class="ico"><use href="#i-globe" /></svg> ali-haroon.com</a>
             <p class="chest-note">US Citizen &bull; open to 2026 opportunities</p>
           </div>
         </div>
@@ -457,10 +527,10 @@
     <section class="panel" data-panel="about" hidden aria-label="About Ali">
       <header class="panel-head">
         <div>
-          <h2>SPAWN ISLAND</h2>
-          <p>CHARACTER SELECT: WHO IS ALI?</p>
+          <h2>RISKY REELS</h2>
+          <p>NOW SHOWING: WHO IS ALI?</p>
         </div>
-        <button class="panel-close" aria-label="Close">✕</button>
+        <button class="panel-close" aria-label="Close"><svg class="ico"><use href="#i-x" /></svg></button>
       </header>
       <div class="panel-body">
         <div class="about-card">

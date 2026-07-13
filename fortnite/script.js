@@ -1,22 +1,63 @@
 const lobby = document.getElementById('lobby');
 const game = document.getElementById('game');
 const playBtn = document.getElementById('playBtn');
-const bus = document.getElementById('battleBus');
-const stormCircle = document.getElementById('stormCircle');
+const realStage = document.getElementById('realStage');
+const fallbackStage = document.getElementById('fallbackStage');
+const mapImg = document.getElementById('mapImg');
+const miniImg = document.getElementById('miniImg');
+const miniFallback = document.getElementById('miniFallback');
 const miniStorm = document.getElementById('miniStorm');
+const stormReal = document.getElementById('stormReal');
+const stormCircle = document.getElementById('stormCircle');
+const busReal = document.getElementById('busReal');
+const busFallback = document.getElementById('busFallback');
 const poiCount = document.getElementById('poiCount');
 const backdrop = document.getElementById('panelBackdrop');
 const victory = document.getElementById('victory');
 const victoryClose = document.getElementById('victoryClose');
-const pois = [...document.querySelectorAll('.poi')];
 const panels = [...document.querySelectorAll('.panel')];
+
+// Chapter 1 Season 7 map, loaded at runtime from the fortnite-archives project
+// (https://github.com/yaelbrinkert/fortnite-archives). Nothing is bundled with
+// this repo; if the image can't load we fall back to the hand-drawn island.
+const MAP_URL =
+  new URLSearchParams(location.search).get('mapimg') ||
+  'https://raw.githubusercontent.com/yaelbrinkert/fortnite-archives/main/chapter_1/season_7/7_00/7_00.jpg';
 
 const visited = new Set();
 let victoryShown = false;
 let openPanel = null;
+let realMode = false;
+let mapReady = null; // promise resolving true (real map) / false (fallback)
+
+/* ---------- preload the real map while the player sits in the lobby ---------- */
+function preloadMap() {
+  mapReady = new Promise((resolve) => {
+    const img = new Image();
+    const timer = setTimeout(() => resolve(false), 8000);
+    img.onload = () => { clearTimeout(timer); resolve(true); };
+    img.onerror = () => { clearTimeout(timer); resolve(false); };
+    img.src = MAP_URL;
+  });
+}
+preloadMap();
 
 /* ---------- lobby → game ---------- */
-playBtn.addEventListener('click', () => {
+playBtn.addEventListener('click', async () => {
+  playBtn.disabled = true;
+  const useReal = await mapReady;
+  realMode = useReal;
+
+  if (useReal) {
+    mapImg.src = MAP_URL;
+    miniImg.src = MAP_URL;
+    miniImg.hidden = false;
+    miniFallback.setAttribute('hidden', '');
+    realStage.hidden = false;
+  } else {
+    fallbackStage.hidden = false;
+  }
+
   lobby.classList.add('leaving');
   game.hidden = false;
   setTimeout(() => { lobby.remove(); }, 550);
@@ -26,22 +67,25 @@ playBtn.addEventListener('click', () => {
 
 /* ---------- battle bus intro ---------- */
 function flyBattleBus() {
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduced) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  bus.classList.add('flying');
+  const bus = realMode ? busReal : busFallback;
+  const span = realMode ? 4096 : 1600; // horizontal span of each map's coordinate space
+  const baseY = realMode ? 900 : 210;
+  const wave = realMode ? 70 : 26;
   const start = performance.now();
   const duration = 6000;
 
+  bus.setAttribute('opacity', '1');
   function frame(now) {
     const t = Math.min((now - start) / duration, 1);
-    const x = -120 + t * 1840;
-    const y = 210 + Math.sin(t * Math.PI * 2) * 26;
+    const x = -0.08 * span + t * span * 1.16;
+    const y = baseY + Math.sin(t * Math.PI * 2) * wave;
     bus.setAttribute('transform', `translate(${x} ${y})`);
     if (t < 1) {
       requestAnimationFrame(frame);
     } else {
-      bus.classList.remove('flying');
+      bus.setAttribute('opacity', '0');
     }
   }
   requestAnimationFrame(frame);
@@ -49,24 +93,28 @@ function flyBattleBus() {
 
 /* ---------- storm circle: slow shrink + reset loop ---------- */
 function startStorm() {
-  const MAX_R = 620;
-  const MIN_R = 190;
-  const CYCLE = 90000; // 90s per "storm phase"
+  const CYCLE = 90000; // 90s per storm phase
   const start = performance.now();
 
   function frame(now) {
     const t = ((now - start) % CYCLE) / CYCLE;
-    // ease: hold, shrink, hold
-    const phase = t < 0.2 ? 0 : t > 0.9 ? 1 : (t - 0.2) / 0.7;
-    const r = MAX_R - (MAX_R - MIN_R) * phase;
-    stormCircle.setAttribute('r', r);
-    miniStorm.setAttribute('r', r);
+    const phase = t < 0.2 ? 0 : t > 0.9 ? 1 : (t - 0.2) / 0.7; // hold, shrink, hold
+    if (realMode) {
+      stormReal.setAttribute('r', 2400 - (2400 - 700) * phase);
+    } else {
+      stormCircle.setAttribute('r', 620 - (620 - 190) * phase);
+    }
+    miniStorm.setAttribute('r', 46 - (46 - 15) * phase);
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
 }
 
 /* ---------- POI → panel ---------- */
+function poiElements(name) {
+  return document.querySelectorAll(`.poi[data-poi="${name}"], .spot[data-poi="${name}"]`);
+}
+
 function showPanel(name) {
   const panel = panels.find((p) => p.dataset.panel === name);
   if (!panel) return;
@@ -79,8 +127,7 @@ function showPanel(name) {
   if (!visited.has(name)) {
     visited.add(name);
     poiCount.textContent = visited.size;
-    const poi = pois.find((p) => p.dataset.poi === name);
-    if (poi) poi.classList.add('visited');
+    poiElements(name).forEach((el) => el.classList.add('visited'));
   }
 }
 
@@ -92,7 +139,10 @@ function closePanel() {
   maybeVictory();
 }
 
-pois.forEach((poi) => {
+document.querySelectorAll('.spot').forEach((spot) => {
+  spot.addEventListener('click', () => showPanel(spot.dataset.poi));
+});
+document.querySelectorAll('.poi').forEach((poi) => {
   poi.addEventListener('click', () => showPanel(poi.dataset.poi));
   poi.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -119,12 +169,13 @@ const chestLoot = document.querySelector('.chest-loot');
 chestBtn.addEventListener('click', () => {
   chestBtn.hidden = true;
   chestLoot.hidden = false;
-  burstConfetti(40, chestLoot);
+  burstConfetti(40);
 });
 
 /* ---------- victory royale ---------- */
+const TOTAL_POIS = 6;
 function maybeVictory() {
-  if (victoryShown || visited.size < pois.length) return;
+  if (victoryShown || visited.size < TOTAL_POIS) return;
   victoryShown = true;
   victory.hidden = false;
   burstConfetti(120);
@@ -135,7 +186,7 @@ function hideVictory() {
 }
 victoryClose.addEventListener('click', hideVictory);
 
-const CONFETTI_COLORS = ['#ffd54d', '#7b2ff7', '#3fa9ff', '#52d95e', '#ff9d2e', '#ffffff'];
+const CONFETTI_COLORS = ['#ffd21f', '#8547e8', '#37a5ff', '#60aa3a', '#e98d4b', '#ffffff'];
 function burstConfetti(count) {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   for (let i = 0; i < count; i++) {
