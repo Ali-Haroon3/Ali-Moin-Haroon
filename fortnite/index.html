@@ -52,9 +52,12 @@
         <symbol id="i-x" viewBox="0 0 24 24">
           <path d="M 6 6 L 18 18 M 18 6 L 6 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" />
         </symbol>
+        <symbol id="i-play" viewBox="0 0 24 24">
+          <path d="M 7 4.5 L 19.5 12 L 7 19.5 Z" fill="currentColor" />
+        </symbol>
         <!-- battle bus, shared by both map modes -->
         <symbol id="busShape" viewBox="-45 -100 90 120">
-          <path d="M 0 -46 Q -34 -78 0 -92 Q 34 -78 0 -46 Z" fill="#8547e8" stroke="#5a1fd0" stroke-width="3" />
+          <path d="M 0 -46 Q -34 -78 0 -92 Q 34 -78 0 -46 Z" fill="#b04df9" stroke="#7a2fc4" stroke-width="3" />
           <line x1="-14" y1="-52" x2="-10" y2="-24" stroke="#2a2a2a" stroke-width="2.5" />
           <line x1="14" y1="-52" x2="10" y2="-24" stroke="#2a2a2a" stroke-width="2.5" />
           <rect x="-38" y="-24" width="76" height="34" rx="8" fill="#4f78d9" stroke="#2d4fa3" stroke-width="3" />
@@ -69,11 +72,14 @@
 
     <!-- ============ LOBBY / LOADING SCREEN ============ -->
     <div id="lobby" class="lobby">
-      <div class="lobby-sky"></div>
+      <div class="lobby-sky">
+        <div class="slash slash-1"></div>
+        <div class="slash slash-2"></div>
+      </div>
       <div class="lobby-content">
-        <p class="lobby-eyebrow">SEASON 2026 &bull; CHAPTER: SENIOR YEAR</p>
+        <p class="lobby-eyebrow">SEASON 2026 &bull; CHAPTER 2: POST-GRAD</p>
         <h1 class="lobby-title">ALI<br />HAROON</h1>
-        <p class="lobby-sub">SOFTWARE ENGINEER &bull; CU BOULDER &bull; CS + MATH + BIOCHEM</p>
+        <p class="lobby-sub">SOFTWARE ENGINEER @ VISA &bull; CO-FOUNDER @ CRONYS &bull; CU BOULDER GRAD</p>
         <button id="playBtn" class="play-btn">
           <span>DROP IN</span>
         </button>
@@ -125,43 +131,52 @@
         <a class="slot" href="../index.html" title="Classic portfolio"><svg class="ico"><use href="#i-pad" /></svg><em>Classic</em></a>
       </div>
 
-      <!-- ============ REAL MAP MODE (Season 7 island via fortnite-archives) ============ -->
+      <!-- ============ REAL MAP MODE (Fortnite Reload island via fortnite-archives) ============ -->
       <div id="realStage" class="real-stage" hidden>
         <div class="map-box">
-          <img id="mapImg" alt="Fortnite Chapter 1 Season 7 island map" draggable="false" />
+          <img id="mapImg" alt="Fortnite Reload island map" draggable="false" />
           <svg class="map-overlay" viewBox="0 0 4096 4096" preserveAspectRatio="none" aria-hidden="true">
+            <!-- in-game style grid -->
+            <g class="map-grid">
+              <path d="M 409.6 0 V 4096 M 819.2 0 V 4096 M 1228.8 0 V 4096 M 1638.4 0 V 4096 M 2048 0 V 4096 M 2457.6 0 V 4096 M 2867.2 0 V 4096 M 3276.8 0 V 4096 M 3686.4 0 V 4096
+                       M 0 409.6 H 4096 M 0 819.2 H 4096 M 0 1228.8 H 4096 M 0 1638.4 H 4096 M 0 2048 H 4096 M 0 2457.6 H 4096 M 0 2867.2 H 4096 M 0 3276.8 H 4096 M 0 3686.4 H 4096" />
+              <g class="map-grid-text">
+                <text x="204.8" y="90">A</text><text x="614.4" y="90">B</text><text x="1024" y="90">C</text><text x="1433.6" y="90">D</text><text x="1843.2" y="90">E</text><text x="2252.8" y="90">F</text><text x="2662.4" y="90">G</text><text x="3072" y="90">H</text><text x="3481.6" y="90">I</text><text x="3891.2" y="90">J</text>
+                <text x="55" y="235">1</text><text x="55" y="645">2</text><text x="55" y="1055">3</text><text x="55" y="1464">4</text><text x="55" y="1874">5</text><text x="55" y="2283">6</text><text x="55" y="2693">7</text><text x="55" y="3103">8</text><text x="55" y="3512">9</text><text x="55" y="3922">10</text>
+              </g>
+            </g>
             <circle id="stormReal" cx="2048" cy="2048" r="2400" class="storm-line" />
             <use id="busReal" href="#busShape" width="240" height="320" x="-120" y="-260" opacity="0" />
           </svg>
-          <!-- hotspots: positions read off the 4096px map -->
-          <button class="spot" data-poi="experience" style="--x:37.5%; --y:48%">
+          <!-- hotspots: positions read off the Reload map -->
+          <button class="spot" data-poi="experience" style="--x:54.5%; --y:57%">
             <span class="spot-ring"></span>
             <span class="spot-name">TILTED TOWERS</span>
             <span class="spot-tag">EXPERIENCE</span>
           </button>
-          <button class="spot" data-poi="projects" style="--x:26.5%; --y:29%">
+          <button class="spot" data-poi="projects" style="--x:30%; --y:45.5%">
             <span class="spot-ring"></span>
             <span class="spot-name">PLEASANT PARK</span>
             <span class="spot-tag">PROJECTS</span>
           </button>
-          <button class="spot" data-poi="skills" style="--x:52.5%; --y:61%">
+          <button class="spot" data-poi="skills" style="--x:79%; --y:73.5%">
             <span class="spot-ring"></span>
-            <span class="spot-name">SALTY SPRINGS</span>
+            <span class="spot-name">RETAIL ROW</span>
             <span class="spot-tag">SKILLS</span>
           </button>
-          <button class="spot" data-poi="contact" style="--x:43%; --y:37%">
+          <button class="spot" data-poi="contact" style="--x:39%; --y:61.5%">
             <span class="spot-ring"></span>
-            <span class="spot-name">LOOT LAKE</span>
+            <span class="spot-name">LIL' LOOT LAKE</span>
             <span class="spot-tag">CONTACT</span>
           </button>
-          <button class="spot" data-poi="education" style="--x:14%; --y:52.8%">
+          <button class="spot" data-poi="education" style="--x:72.5%; --y:42.5%">
             <span class="spot-ring"></span>
-            <span class="spot-name">POLAR PEAK</span>
+            <span class="spot-name">SNOBBY SHOALS</span>
             <span class="spot-tag">EDUCATION</span>
           </button>
-          <button class="spot" data-poi="about" style="--x:71%; --y:19%">
+          <button class="spot" data-poi="about" style="--x:50%; --y:31.5%">
             <span class="spot-ring"></span>
-            <span class="spot-name">RISKY REELS</span>
+            <span class="spot-name">LONE LODGE</span>
             <span class="spot-tag">ABOUT ME</span>
           </button>
         </div>
@@ -183,7 +198,7 @@
             </g>
 
             <g id="islandArt">
-              <rect x="0" y="0" width="1600" height="1000" fill="#1f7ac9" />
+              <rect x="0" y="0" width="1600" height="1000" fill="#103a8c" />
               <circle cx="800" cy="500" r="560" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="18" />
               <circle cx="800" cy="500" r="640" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="14" />
 
@@ -202,10 +217,10 @@
                        C 1128 800, 962 866, 800 848
                        C 634 830, 500 790, 424 672
                        C 350 552, 368 428, 410 320 Z"
-                    fill="#79b74f" />
+                    fill="#318218" />
 
               <ellipse cx="200" cy="775" rx="105" ry="72" fill="#e8d29a" />
-              <ellipse cx="200" cy="770" rx="88" ry="58" fill="#79b74f" />
+              <ellipse cx="200" cy="770" rx="88" ry="58" fill="#318218" />
 
               <path d="M 1000 350 C 1060 320, 1160 330, 1190 390 C 1220 450, 1180 510, 1110 520 C 1035 530, 970 490, 965 435 C 962 395, 965 370, 1000 350 Z"
                     fill="#2e9fd9" stroke="#e8d29a" stroke-width="8" />
@@ -221,7 +236,7 @@
                 <path d="M 360 400 C 460 430, 640 480, 780 510" />
               </g>
 
-              <!-- Polar Peak mountains -->
+              <!-- Snobby Shoals cliffs -->
               <g transform="translate(330,370)">
                 <path d="M -80 60 L -10 -70 L 55 60 Z" fill="#9aa7b8" />
                 <path d="M -10 -70 L -34 -20 L 14 -20 Z" fill="#f2f6fa" />
@@ -244,7 +259,7 @@
                 <rect x="-58" y="-70" width="34" height="88" fill="#9fb0c4" transform="rotate(-4 -41 -26)" />
                 <rect x="-14" y="-98" width="40" height="116" fill="#9fb0c4" />
                 <rect x="34" y="-58" width="30" height="76" fill="#9fb0c4" transform="rotate(4 49 -20)" />
-                <g fill="#ffd21f">
+                <g fill="#fbd444">
                   <rect x="-8" y="-88" width="8" height="8" /><rect x="8" y="-88" width="8" height="8" />
                   <rect x="-8" y="-68" width="8" height="8" /><rect x="8" y="-48" width="8" height="8" />
                   <rect x="-52" y="-58" width="7" height="7" /><rect x="-40" y="-38" width="7" height="7" />
@@ -252,21 +267,21 @@
                 </g>
               </g>
 
-              <!-- Salty Springs -->
-              <g transform="translate(905,755)">
-                <ellipse cx="-30" cy="10" rx="26" ry="14" fill="#57c7e8" stroke="#e8d29a" stroke-width="5" />
-                <ellipse cx="34" cy="-4" rx="20" ry="11" fill="#57c7e8" stroke="#e8d29a" stroke-width="5" />
-                <g filter="url(#dropSh)">
-                  <rect x="-8" y="-38" width="38" height="26" fill="#f3e3c6" />
-                  <path d="M -13 -38 L 11 -56 L 35 -38 Z" fill="#d98a3f" />
-                </g>
+              <!-- Retail Row shops -->
+              <g transform="translate(905,755)" filter="url(#dropSh)">
+                <rect x="-52" y="-20" width="40" height="30" fill="#d94f4f" />
+                <rect x="-52" y="-28" width="40" height="8" fill="#f2f6fa" />
+                <rect x="-4" y="-38" width="38" height="26" fill="#f3e3c6" />
+                <path d="M -9 -38 L 15 -56 L 39 -38 Z" fill="#d98a3f" />
+                <rect x="-4" y="-6" width="38" height="16" fill="#4f78d9" />
+                <rect x="-4" y="-12" width="38" height="6" fill="#f2f6fa" />
               </g>
 
-              <!-- Loot Lake chest island -->
+              <!-- Lil' Loot Lake chest island -->
               <g transform="translate(1080,420)" filter="url(#dropSh)">
                 <rect x="-16" y="-10" width="32" height="20" rx="3" fill="#a8642c" />
                 <path d="M -16 -10 Q 0 -26 16 -10 Z" fill="#c07a38" />
-                <rect x="-3" y="-8" width="6" height="16" fill="#ffd21f" />
+                <rect x="-3" y="-8" width="6" height="16" fill="#fbd444" />
               </g>
 
               <use href="#tree" transform="translate(520,560)" />
@@ -278,14 +293,14 @@
               <use href="#tree" transform="translate(450,520) scale(0.75)" />
               <use href="#tree" transform="translate(1100,700) scale(0.8)" />
 
-              <!-- Risky Reels drive-in island -->
+              <!-- Lone Lodge island -->
               <use href="#tree" transform="translate(160,745) scale(0.7)" />
-              <g transform="translate(215,760)" filter="url(#dropSh)">
-                <rect x="-4" y="-4" width="4" height="18" fill="#8a5a33" />
-                <rect x="28" y="-4" width="4" height="18" fill="#8a5a33" />
-                <rect x="-8" y="-34" width="44" height="32" fill="#f2f6fa" stroke="#39435a" stroke-width="3" />
-                <rect x="6" y="20" width="7" height="5" fill="#d94f4f" />
-                <rect x="18" y="22" width="7" height="5" fill="#4f78d9" />
+              <use href="#tree" transform="translate(250,795) scale(0.6)" />
+              <g transform="translate(200,775)" filter="url(#dropSh)">
+                <rect x="-26" y="-22" width="52" height="30" fill="#8a5a33" />
+                <path d="M -32 -22 L 0 -46 L 32 -22 Z" fill="#6f4222" />
+                <rect x="14" y="-40" width="8" height="14" fill="#5c3618" />
+                <rect x="-8" y="-8" width="16" height="16" fill="#3c2410" />
               </g>
             </g>
           </defs>
@@ -297,9 +312,9 @@
           </g>
 
           <g id="poiLayer">
-            <g class="poi" data-poi="education" tabindex="0" role="button" aria-label="Polar Peak: Education">
+            <g class="poi" data-poi="education" tabindex="0" role="button" aria-label="Snobby Shoals: Education">
               <circle cx="345" cy="395" r="95" class="poi-hit" />
-              <text x="345" y="475" class="poi-label">POLAR PEAK</text>
+              <text x="345" y="475" class="poi-label">SNOBBY SHOALS</text>
               <text x="345" y="497" class="poi-tag">EDUCATION</text>
             </g>
             <g class="poi" data-poi="projects" tabindex="0" role="button" aria-label="Pleasant Park: Projects">
@@ -312,19 +327,19 @@
               <text x="800" y="580" class="poi-label">TILTED TOWERS</text>
               <text x="800" y="602" class="poi-tag">EXPERIENCE</text>
             </g>
-            <g class="poi" data-poi="contact" tabindex="0" role="button" aria-label="Loot Lake: Contact">
+            <g class="poi" data-poi="contact" tabindex="0" role="button" aria-label="Lil' Loot Lake: Contact">
               <circle cx="1080" cy="425" r="90" class="poi-hit" />
-              <text x="1080" y="530" class="poi-label">LOOT LAKE</text>
+              <text x="1080" y="530" class="poi-label">LIL' LOOT LAKE</text>
               <text x="1080" y="552" class="poi-tag">CONTACT</text>
             </g>
-            <g class="poi" data-poi="skills" tabindex="0" role="button" aria-label="Salty Springs: Skills">
+            <g class="poi" data-poi="skills" tabindex="0" role="button" aria-label="Retail Row: Skills">
               <circle cx="905" cy="745" r="90" class="poi-hit" />
-              <text x="905" y="840" class="poi-label">SALTY SPRINGS</text>
+              <text x="905" y="840" class="poi-label">RETAIL ROW</text>
               <text x="905" y="862" class="poi-tag">SKILLS</text>
             </g>
-            <g class="poi" data-poi="about" tabindex="0" role="button" aria-label="Risky Reels: About Ali">
+            <g class="poi" data-poi="about" tabindex="0" role="button" aria-label="Lone Lodge: About Ali">
               <circle cx="200" cy="770" r="90" class="poi-hit" />
-              <text x="200" y="880" class="poi-label">RISKY REELS</text>
+              <text x="200" y="880" class="poi-label">LONE LODGE</text>
               <text x="200" y="902" class="poi-tag">ABOUT ME</text>
             </g>
           </g>
@@ -364,43 +379,64 @@
         <button class="panel-close" aria-label="Close"><svg class="ico"><use href="#i-x" /></svg></button>
       </header>
       <div class="panel-body">
+        <article class="quest mythic">
+          <div class="quest-top">
+            <h3>Visa — Software Engineer</h3>
+            <span class="rarity-pill">MYTHIC QUEST &bull; ACTIVE</span>
+          </div>
+          <p class="quest-meta">Highlands Ranch, CO &bull; Jun 2026 – Present</p>
+          <ul class="quest-list">
+            <li><svg class="ico check"><use href="#i-check" /></svg> Designed and enhanced Spring Boot RESTful APIs serving a real-time transaction-monitoring platform <b class="xp">LIVE FINANCIAL DATA STREAMS</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Maintained data integrity across IBM DB2 databases backing production analytics <b class="xp">MISSION-CRITICAL</b></li>
+          </ul>
+        </article>
+
         <article class="quest legendary">
           <div class="quest-top">
-            <h3>Vantor — Software Development Intern</h3>
-            <span class="rarity-pill">LEGENDARY QUEST</span>
+            <h3>Cronys — Co-Founder</h3>
+            <span class="rarity-pill">LEGENDARY QUEST &bull; ACTIVE</span>
           </div>
-          <p class="quest-meta">Westminster, CO &bull; Jun 2025 – Aug 2025</p>
+          <p class="quest-meta">Remote (cronys.xyz) &bull; Mar 2026 – Present</p>
           <ul class="quest-list">
-            <li><svg class="ico check"><use href="#i-check" /></svg> Engineered distributed infrastructure for 6 satellite ground-station monitoring environments with Java + Kubernetes <b class="xp">−30% incident response time</b></li>
-            <li><svg class="ico check"><use href="#i-check" /></svg> Built observability dashboards with Grafana, Prometheus, and Java collectors <b class="xp">35 production services</b></li>
-            <li><svg class="ico check"><use href="#i-check" /></svg> Designed automated testing workflows for 15+ Linux microservices with Jenkins CI/CD <b class="xp">+10,000 XP</b></li>
-            <li><svg class="ico check"><use href="#i-check" /></svg> Implemented Spring Boot APIs for low-latency inference <b class="xp">1K+ req/min</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Co-founded an AI agent governance platform — FastAPI backend with RAG-based retrieval — evaluating and classifying agent actions in real time <b class="xp">$25K PRE-SEED</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Designed the policy engine and evaluation infrastructure for automated governance decisions <b class="xp">BUILT FOR AUDIT + SCALE</b></li>
           </ul>
         </article>
 
         <article class="quest epic">
           <div class="quest-top">
-            <h3>CUChange — Data Management Research Assistant</h3>
-            <span class="rarity-pill">EPIC QUEST &bull; ACTIVE</span>
+            <h3>Vantor (formerly Maxar) — Software Development Intern</h3>
+            <span class="rarity-pill">EPIC QUEST</span>
           </div>
-          <p class="quest-meta">Boulder, CO &bull; Jul 2025 – Present</p>
+          <p class="quest-meta">Westminster, CO &bull; Jun 2025 – Aug 2025</p>
           <ul class="quest-list">
-            <li><svg class="ico check"><use href="#i-check" /></svg> Developed full-stack Django apps with PostgreSQL on GCP <b class="xp">50K+ research records</b></li>
-            <li><svg class="ico check"><use href="#i-check" /></svg> Built automated pipelines with Python, pandas, and the REDCap API for large-scale cleaning + transformation <b class="xp">+8,000 XP</b></li>
-            <li><svg class="ico check"><use href="#i-check" /></svg> Designed migration &amp; reporting workflows <b class="xp">+300% processing speed</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Engineered distributed monitoring across 6 satellite ground stations with real-time telemetry ingestion <b class="xp">SUB-SECOND LATENCY</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Implemented Spring Boot REST APIs for low-latency data access and inference <b class="xp">1K+ REQ/MIN</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Built the observability stack (Grafana, Prometheus, Java collectors) and automated QA for 15+ Linux microservices with Jenkins <b class="xp">35 SERVICES</b></li>
           </ul>
         </article>
 
         <article class="quest rare">
           <div class="quest-top">
-            <h3>ReportsNow — Software Engineering Intern</h3>
+            <h3>CUChange — Data Management Research Assistant</h3>
             <span class="rarity-pill">RARE QUEST</span>
+          </div>
+          <p class="quest-meta">Boulder, CO &bull; Jul 2025 – May 2026</p>
+          <ul class="quest-list">
+            <li><svg class="ico check"><use href="#i-check" /></svg> Built automated Python pipelines (pandas, SQL, REDCap API) ingesting and cleaning large-scale datasets <b class="xp">HETEROGENEOUS SOURCES</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Engineered reproducible Python/R workflows with PostgreSQL on GCP <b class="xp">+300% REPORT SPEED</b></li>
+          </ul>
+        </article>
+
+        <article class="quest uncommon">
+          <div class="quest-top">
+            <h3>ReportsNow — Software Engineering Intern</h3>
+            <span class="rarity-pill">UNCOMMON QUEST</span>
           </div>
           <p class="quest-meta">Greenwood Village, CO &bull; May 2024 – Jul 2024</p>
           <ul class="quest-list">
-            <li><svg class="ico check"><use href="#i-check" /></svg> Built a BI platform with C#, ASP.NET Core, and React <b class="xp">125+ client systems</b></li>
-            <li><svg class="ico check"><use href="#i-check" /></svg> Optimized a SQL Server analytics stack with Entity Framework <b class="xp">500+ daily queries</b></li>
-            <li><svg class="ico check"><use href="#i-check" /></svg> Implemented Azure DevOps + Docker CI/CD in Agile/SCRUM workflows <b class="xp">+6,000 XP</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Built a full-stack analytics app (C#, ASP.NET Core, React) consolidating data from 125+ client systems <b class="xp">−40% REPORT TIME</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Designed RESTful APIs with SQL Server; shipped via Azure DevOps CI/CD with Docker <b class="xp">500+ DAILY QUERIES</b></li>
           </ul>
         </article>
       </div>
@@ -418,21 +454,22 @@
         <article class="loot legendary">
           <span class="rarity-pill">LEGENDARY</span>
           <h3>Polymarket Weather Prediction</h3>
-          <p>Prediction-market weather model trading on real Polymarket data.</p>
-          <p class="loot-stack">Rust &bull; Python &bull; NumPy &bull; pandas &bull; Scikit-learn &bull; PostgreSQL</p>
+          <p>Rust + Python pipeline processing 500K+ NOAA records into PostgreSQL; calibrated probability forecasts (0.87 Brier) with Bayesian inference and Monte Carlo risk modeling for prediction-market contracts.</p>
+          <p class="loot-stack">Rust &bull; Python &bull; NumPy &bull; pandas &bull; PostgreSQL</p>
           <a class="panel-btn" href="https://github.com/Ali-Haroon3/Polymarket-Weather-Predictor" target="_blank" rel="noreferrer">INSPECT ON GITHUB <svg class="ico"><use href="#i-out" /></svg></a>
         </article>
         <article class="loot epic">
           <span class="rarity-pill">EPIC</span>
           <h3>BlackjackTrainer</h3>
-          <p>AI-assisted blackjack strategy trainer, deployed on AWS.</p>
+          <p>Production app on AWS App Runner with automated CI/CD; an RL / Monte Carlo tree search engine computes expected-value-optimal decisions.</p>
           <p class="loot-stack">Python &bull; Flask &bull; JavaScript &bull; AWS</p>
+          <a class="panel-btn gold" href="https://blackjacktrainings.com" target="_blank" rel="noreferrer"><svg class="ico"><use href="#i-play" /></svg> PLAY IT LIVE</a>
           <a class="panel-btn" href="https://github.com/Ali-Haroon3/AIBlackJackTrainer" target="_blank" rel="noreferrer">INSPECT ON GITHUB <svg class="ico"><use href="#i-out" /></svg></a>
         </article>
-        <article class="loot epic">
-          <span class="rarity-pill">EPIC</span>
-          <h3>Lung Cancer Detection</h3>
-          <p>Deep-learning imaging classifier with an interactive Streamlit front end.</p>
+        <article class="loot rare">
+          <span class="rarity-pill">RARE</span>
+          <h3>Lung Cancer Detection CNN</h3>
+          <p>Model inference app (ResNet50, DenseNet121) with a PostgreSQL backend for batch inference, audit logging, and model performance monitoring.</p>
           <p class="loot-stack">Python &bull; TensorFlow &bull; Streamlit &bull; PostgreSQL</p>
           <a class="panel-btn" href="https://github.com/Ali-Haroon3/Lung-Cancer-Detection" target="_blank" rel="noreferrer">INSPECT ON GITHUB <svg class="ico"><use href="#i-out" /></svg></a>
         </article>
@@ -442,39 +479,72 @@
     <section class="panel" data-panel="skills" hidden aria-label="Skills">
       <header class="panel-head">
         <div>
-          <h2>SALTY SPRINGS</h2>
-          <p>LOCKER: EQUIPPED SKILLS</p>
+          <h2>RETAIL ROW</h2>
+          <p>AISLES: THE FULL LOADOUT</p>
         </div>
         <button class="panel-close" aria-label="Close"><svg class="ico"><use href="#i-x" /></svg></button>
       </header>
       <div class="panel-body">
-        <div class="inv-grid">
-          <span class="inv legendary">Python</span>
-          <span class="inv legendary">Rust</span>
-          <span class="inv legendary">Java</span>
-          <span class="inv epic">C#</span>
-          <span class="inv epic">SQL</span>
-          <span class="inv epic">JavaScript</span>
-          <span class="inv epic">TensorFlow</span>
-          <span class="inv epic">PyTorch</span>
-          <span class="inv rare">Scikit-learn</span>
-          <span class="inv rare">Kubernetes</span>
-          <span class="inv rare">Docker</span>
-          <span class="inv rare">AWS</span>
-          <span class="inv uncommon">Jenkins</span>
-          <span class="inv uncommon">Azure DevOps</span>
-          <span class="inv uncommon">PostgreSQL</span>
-          <span class="inv common">Grafana</span>
-          <span class="inv common">Prometheus</span>
+        <div class="aisle">
+          <h3 class="aisle-name legendary-t">AISLE 1 &mdash; LANGUAGES</h3>
+          <div class="inv-grid">
+            <span class="inv legendary">Rust</span>
+            <span class="inv legendary">C++</span>
+            <span class="inv legendary">Java</span>
+            <span class="inv legendary">Python</span>
+            <span class="inv legendary">C#</span>
+            <span class="inv legendary">JavaScript</span>
+            <span class="inv legendary">SQL</span>
+          </div>
         </div>
-        <p class="inv-note">Rarity = how often it's in my main loadout, not how much I like it. Prometheus, you're still loved.</p>
+        <div class="aisle">
+          <h3 class="aisle-name epic-t">AISLE 2 &mdash; DISTRIBUTED SYSTEMS</h3>
+          <div class="inv-grid">
+            <span class="inv epic">High-Throughput APIs</span>
+            <span class="inv epic">Real-Time Streaming Pipelines</span>
+            <span class="inv epic">Observability (Grafana &bull; Prometheus)</span>
+            <span class="inv epic">Reliability Engineering</span>
+            <span class="inv epic">Horizontal Scaling</span>
+            <span class="inv epic">Load &amp; Rate Limiting</span>
+          </div>
+        </div>
+        <div class="aisle">
+          <h3 class="aisle-name rare-t">AISLE 3 &mdash; INFRASTRUCTURE</h3>
+          <div class="inv-grid">
+            <span class="inv rare">Docker</span>
+            <span class="inv rare">Kubernetes</span>
+            <span class="inv rare">AWS</span>
+            <span class="inv rare">GCP</span>
+            <span class="inv rare">Azure</span>
+            <span class="inv rare">Jenkins</span>
+            <span class="inv rare">CI/CD</span>
+            <span class="inv rare">Linux</span>
+            <span class="inv rare">PostgreSQL</span>
+            <span class="inv rare">SQL Server</span>
+            <span class="inv rare">IBM DB2</span>
+          </div>
+        </div>
+        <div class="aisle">
+          <h3 class="aisle-name uncommon-t">AISLE 4 &mdash; FRAMEWORKS &amp; ML</h3>
+          <div class="inv-grid">
+            <span class="inv uncommon">Spring Boot</span>
+            <span class="inv uncommon">FastAPI</span>
+            <span class="inv uncommon">Flask</span>
+            <span class="inv uncommon">React</span>
+            <span class="inv uncommon">RAG / Retrieval Systems</span>
+            <span class="inv uncommon">Agent Orchestration</span>
+            <span class="inv uncommon">TensorFlow</span>
+            <span class="inv uncommon">PyTorch</span>
+          </div>
+        </div>
+        <p class="inv-note">Aisle color = shelf category, not affection. Every item is kept in stock.</p>
       </div>
     </section>
 
     <section class="panel" data-panel="education" hidden aria-label="Education">
       <header class="panel-head">
         <div>
-          <h2>POLAR PEAK</h2>
+          <h2>SNOBBY SHOALS</h2>
           <p>TRAINING GROUNDS: EDUCATION</p>
         </div>
         <button class="panel-close" aria-label="Close"><svg class="ico"><use href="#i-x" /></svg></button>
@@ -483,15 +553,16 @@
         <article class="quest legendary">
           <div class="quest-top">
             <h3>University of Colorado Boulder</h3>
-            <span class="rarity-pill">SENIOR &bull; LEVEL 4/4</span>
+            <span class="rarity-pill">GRADUATED &bull; MAY 2026</span>
           </div>
-          <p class="quest-meta">Boulder, CO &bull; the Flatirons are basically Polar Peak</p>
+          <p class="quest-meta">Boulder, CO &bull; where the tuition went</p>
           <ul class="quest-list">
             <li><svg class="ico check"><use href="#i-check" /></svg> B.S. Computer Science <b class="xp">MAIN CLASS</b></li>
-            <li><svg class="ico check"><use href="#i-check" /></svg> Mathematics <b class="xp">DUAL WIELD</b></li>
-            <li><svg class="ico check"><use href="#i-check" /></svg> Biochemistry <b class="xp">THIRD SLOT</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Minor: Mathematics <b class="xp">DUAL WIELD</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> Minor: Biochemistry <b class="xp">THIRD SLOT</b></li>
+            <li><svg class="ico check"><use href="#i-check" /></svg> GPA 3.7 <b class="xp">RANKED</b></li>
           </ul>
-          <div class="xp-bar"><div class="xp-fill"></div><span>SEASON PROGRESS: SENIOR YEAR</span></div>
+          <div class="xp-bar"><div class="xp-fill" style="width:100%"></div><span>SEASON COMPLETE: CLASS OF 2026</span></div>
         </article>
       </div>
     </section>
@@ -499,7 +570,7 @@
     <section class="panel" data-panel="contact" hidden aria-label="Contact">
       <header class="panel-head">
         <div>
-          <h2>LOOT LAKE</h2>
+          <h2>LIL' LOOT LAKE</h2>
           <p>OPEN THE CHEST: CONTACT ALI</p>
         </div>
         <button class="panel-close" aria-label="Close"><svg class="ico"><use href="#i-x" /></svg></button>
@@ -510,7 +581,7 @@
             <svg viewBox="0 0 120 90" width="150" height="112">
               <rect x="12" y="34" width="96" height="48" rx="6" fill="#a8642c" stroke="#6f3f16" stroke-width="4" />
               <path class="chest-lid" d="M 12 36 Q 60 -8 108 36 Z" fill="#c07a38" stroke="#6f3f16" stroke-width="4" />
-              <rect x="52" y="40" width="16" height="26" rx="3" fill="#ffd21f" stroke="#b8860b" stroke-width="3" />
+              <rect x="52" y="40" width="16" height="26" rx="3" fill="#fbd444" stroke="#b8860b" stroke-width="3" />
             </svg>
             <span>TAP TO OPEN</span>
           </button>
@@ -518,7 +589,8 @@
             <a class="panel-btn gold" href="mailto:ali.haroon@colorado.edu"><svg class="ico"><use href="#i-mail" /></svg> ali.haroon@colorado.edu</a>
             <a class="panel-btn" href="https://github.com/Ali-Haroon3" target="_blank" rel="noreferrer"><svg class="ico"><use href="#i-code" /></svg> github.com/Ali-Haroon3</a>
             <a class="panel-btn" href="https://www.ali-haroon.com" target="_blank" rel="noreferrer"><svg class="ico"><use href="#i-globe" /></svg> ali-haroon.com</a>
-            <p class="chest-note">US Citizen &bull; open to 2026 opportunities</p>
+            <a class="panel-btn" href="https://cronys.xyz" target="_blank" rel="noreferrer"><svg class="ico"><use href="#i-out" /></svg> cronys.xyz</a>
+            <p class="chest-note">US Citizen &bull; Software Engineer @ Visa &bull; Co-Founder @ Cronys</p>
           </div>
         </div>
       </div>
@@ -527,8 +599,8 @@
     <section class="panel" data-panel="about" hidden aria-label="About Ali">
       <header class="panel-head">
         <div>
-          <h2>RISKY REELS</h2>
-          <p>NOW SHOWING: WHO IS ALI?</p>
+          <h2>LONE LODGE</h2>
+          <p>CHARACTER SELECT: WHO IS ALI?</p>
         </div>
         <button class="panel-close" aria-label="Close"><svg class="ico"><use href="#i-x" /></svg></button>
       </header>
@@ -537,16 +609,18 @@
           <div class="about-avatar" aria-hidden="true">AH</div>
           <div>
             <h3>Ali Haroon</h3>
-            <p class="quest-meta">Senior @ CU Boulder &bull; CS + Math + Biochemistry</p>
+            <p class="quest-meta">Software Engineer @ Visa &bull; Co-Founder @ Cronys &bull; CU Boulder '26</p>
             <p class="about-blurb">
-              I build reliable software systems, data pipelines, and ML-powered products —
-              from distributed infrastructure and observability tooling to full-stack research apps.
-              Main drops: backend systems, data/ML, and anything with a hard problem in the middle.
+              I build reliable software systems, data pipelines, and ML-powered products.
+              Right now that means real-time transaction monitoring at Visa and building
+              Cronys, an AI agent governance platform ($25K pre-seed). CU Boulder grad —
+              computer science with math and biochemistry minors. Main drops: backend
+              systems, distributed infrastructure, and anything with a hard problem in the middle.
             </p>
             <div class="stat-rows">
-              <div class="stat-row"><span>SYSTEMS &amp; INFRA</span><div class="stat-bar"><i style="width:92%"></i></div></div>
+              <div class="stat-row"><span>SYSTEMS &amp; INFRA</span><div class="stat-bar"><i style="width:94%"></i></div></div>
               <div class="stat-row"><span>DATA / ML</span><div class="stat-bar"><i style="width:88%"></i></div></div>
-              <div class="stat-row"><span>FULL-STACK</span><div class="stat-bar"><i style="width:82%"></i></div></div>
+              <div class="stat-row"><span>FULL-STACK</span><div class="stat-bar"><i style="width:84%"></i></div></div>
               <div class="stat-row"><span>BUILD BATTLES</span><div class="stat-bar"><i style="width:34%"></i></div><em>(working on it)</em></div>
             </div>
           </div>

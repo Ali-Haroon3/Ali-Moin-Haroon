@@ -17,12 +17,13 @@ const victory = document.getElementById('victory');
 const victoryClose = document.getElementById('victoryClose');
 const panels = [...document.querySelectorAll('.panel')];
 
-// Chapter 1 Season 7 map, loaded at runtime from the fortnite-archives project
-// (https://github.com/yaelbrinkert/fortnite-archives). Nothing is bundled with
-// this repo; if the image can't load we fall back to the hand-drawn island.
+// Fortnite Reload island (codename BlastBerry), loaded at runtime from the
+// fortnite-archives project (https://github.com/yaelbrinkert/fortnite-archives).
+// Nothing is bundled with this repo; if the image can't load we fall back to
+// the hand-drawn island.
 const MAP_URL =
   new URLSearchParams(location.search).get('mapimg') ||
-  'https://raw.githubusercontent.com/yaelbrinkert/fortnite-archives/main/chapter_1/season_7/7_00/7_00.jpg';
+  'https://raw.githubusercontent.com/yaelbrinkert/fortnite-archives/main/latest/blastberry_latest.png';
 
 const visited = new Set();
 let victoryShown = false;
