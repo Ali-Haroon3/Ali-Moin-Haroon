@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ali Haroon | Drop In</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- ============ LOBBY / LOADING SCREEN ============ -->
+    <div id="lobby" class="lobby">
+      <div class="lobby-sky"></div>
+      <div class="lobby-content">
+        <p class="lobby-eyebrow">SEASON 2026 &bull; CHAPTER: SENIOR YEAR</p>
+        <h1 class="lobby-title">ALI<br />HAROON</h1>
+        <p class="lobby-sub">SOFTWARE ENGINEER &bull; CU BOULDER &bull; CS + MATH + BIOCHEM</p>
+        <button id="playBtn" class="play-btn">
+          <span>DROP IN</span>
+        </button>
+        <a class="lobby-classic" href="../index.html">or switch to Classic Mode</a>
+      </div>
+      <div class="lobby-tip">TIP: Click a POI on the map to discover a part of Ali. Find all 6 for a Victory Royale.</div>
+    </div>
+
+    <!-- ============ GAME / MAP SCREEN ============ -->
+    <div id="game" class="game" hidden>
+      <!-- HUD: top bar -->
+      <div class="hud-top">
+        <div class="compass" aria-hidden="true">
+          <div class="compass-strip">
+            <span>W</span><span>&bull;</span><span>NW</span><span>&bull;</span><span>N</span><span>&bull;</span><span>NE</span><span>&bull;</span><span>E</span><span>&bull;</span><span>SE</span><span>&bull;</span><span>S</span><span>&bull;</span><span>SW</span><span>&bull;</span>
+            <span>W</span><span>&bull;</span><span>NW</span><span>&bull;</span><span>N</span><span>&bull;</span><span>NE</span><span>&bull;</span><span>E</span><span>&bull;</span><span>SE</span><span>&bull;</span><span>S</span><span>&bull;</span><span>SW</span><span>&bull;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- HUD: right column -->
+      <div class="hud-right">
+        <div class="minimap" aria-hidden="true">
+          <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+            <use href="#islandArt" />
+            <circle id="miniStorm" cx="800" cy="500" r="620" class="storm-ring" />
+          </svg>
+        </div>
+        <div class="hud-stats">
+          <div class="hud-stat"><span class="hud-ico">👤</span> 1 recruiter watching</div>
+          <div class="hud-stat"><span class="hud-ico">📍</span> <span id="poiCount">0</span>/6 POIs discovered</div>
+        </div>
+      </div>
+
+      <!-- HUD: bottom left health/shield -->
+      <div class="hud-vitals" aria-hidden="true">
+        <div class="bar shield"><div class="bar-fill"></div><span>100</span></div>
+        <div class="bar health"><div class="bar-fill"></div><span>100</span></div>
+      </div>
+
+      <!-- HUD: bottom right hotbar -->
+      <div class="hotbar">
+        <a class="slot" href="mailto:ali.haroon@colorado.edu" title="Email Ali">✉️<em>Email</em></a>
+        <a class="slot" href="https://github.com/Ali-Haroon3" target="_blank" rel="noreferrer" title="GitHub">🐙<em>GitHub</em></a>
+        <a class="slot" href="https://www.ali-haroon.com" target="_blank" rel="noreferrer" title="Main site">🌐<em>Site</em></a>
+        <a class="slot" href="../index.html" title="Classic portfolio">🕹️<em>Classic</em></a>
+      </div>
+
+      <!-- ============ THE ISLAND MAP ============ -->
+      <div class="map-wrap">
+        <svg id="mapSvg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid meet" role="group" aria-label="Island map of Ali's portfolio">
+          <defs>
+            <radialGradient id="oceanGrad" cx="50%" cy="45%" r="75%">
+              <stop offset="0%" stop-color="#2e9fd9" />
+              <stop offset="70%" stop-color="#1b6fb5" />
+              <stop offset="100%" stop-color="#124f8c" />
+            </radialGradient>
+            <linearGradient id="grassGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#8ecf62" />
+              <stop offset="100%" stop-color="#6fb04a" />
+            </linearGradient>
+            <linearGradient id="towerGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#b9c6d8" />
+              <stop offset="100%" stop-color="#8494ab" />
+            </linearGradient>
+            <linearGradient id="stormGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#b44ee8" />
+              <stop offset="100%" stop-color="#7b2ff7" />
+            </linearGradient>
+            <filter id="dropSh" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#0a2a4a" flood-opacity="0.35" />
+            </filter>
+
+            <!-- Reusable tree -->
+            <g id="tree">
+              <rect x="-3" y="6" width="6" height="10" rx="2" fill="#8a5a33" />
+              <circle cx="0" cy="0" r="12" fill="#3f8f3d" />
+              <circle cx="-8" cy="6" r="8" fill="#4aa348" />
+              <circle cx="8" cy="6" r="8" fill="#4aa348" />
+            </g>
+
+            <!-- The island artwork, reused by the minimap -->
+            <g id="islandArt">
+              <rect x="0" y="0" width="1600" height="1000" fill="url(#oceanGrad)" />
+              <!-- wave rings -->
+              <circle cx="800" cy="500" r="560" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="18" />
+              <circle cx="800" cy="500" r="640" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="14" />
+
+              <!-- main island: sand then grass -->
+              <path d="M 380 300
+                       C 420 180, 620 120, 800 150
+                       C 980 175, 1180 190, 1280 320
+                       C 1370 435, 1350 600, 1260 710
+                       C 1160 830, 980 900, 800 880
+                       C 620 862, 470 820, 390 690
+                       C 310 560, 330 420, 380 300 Z"
+                    fill="#e8d29a" />
+              <path d="M 410 320
+                       C 448 215, 630 155, 795 182
+                       C 962 208, 1145 222, 1240 335
+                       C 1322 440, 1305 590, 1222 690
+                       C 1128 800, 962 866, 800 848
+                       C 634 830, 500 790, 424 672
+                       C 350 552, 368 428, 410 320 Z"
+                    fill="url(#grassGrad)" />
+
+              <!-- spawn island (offshore) -->
+              <ellipse cx="200" cy="775" rx="105" ry="72" fill="#e8d29a" />
+              <ellipse cx="200" cy="770" rx="88" ry="58" fill="url(#grassGrad)" />
+
+              <!-- lake -->
+              <path d="M 1000 350 C 1060 320, 1160 330, 1190 390 C 1220 450, 1180 510, 1110 520 C 1035 530, 970 490, 965 435 C 962 395, 965 370, 1000 350 Z"
+                    fill="#2e9fd9" stroke="#e8d29a" stroke-width="8" />
+              <ellipse cx="1080" cy="428" rx="26" ry="16" fill="#e8d29a" />
+
+              <!-- river from lake to south shore -->
+              <path d="M 990 470 C 940 560, 950 640, 905 700 C 870 748, 850 790, 845 850"
+                    fill="none" stroke="#2e9fd9" stroke-width="20" stroke-linecap="round" />
+
+              <!-- roads -->
+              <g fill="none" stroke="#d9c48f" stroke-width="14" stroke-linecap="round" stroke-dasharray="none" opacity="0.9">
+                <path d="M 620 290 C 680 360, 740 430, 800 505" />
+                <path d="M 800 505 C 900 560, 900 660, 905 730" />
+                <path d="M 800 505 C 890 480, 960 460, 1035 445" />
+                <path d="M 360 400 C 460 430, 640 480, 780 510" />
+              </g>
+
+              <!-- Boulder Bluffs mountains -->
+              <g transform="translate(330,370)">
+                <path d="M -80 60 L -10 -70 L 55 60 Z" fill="#9aa7b8" />
+                <path d="M -10 -70 L -34 -20 L 14 -20 Z" fill="#f2f6fa" />
+                <path d="M 10 60 L 70 -35 L 125 60 Z" fill="#8794a6" />
+                <path d="M 70 -35 L 52 0 L 88 0 Z" fill="#eef3f8" />
+              </g>
+
+              <!-- Pleasant Projects houses -->
+              <g transform="translate(620,235)">
+                <g filter="url(#dropSh)">
+                  <rect x="-55" y="0" width="44" height="34" fill="#e5eef7" />
+                  <path d="M -60 0 L -33 -24 L -6 0 Z" fill="#d94f4f" />
+                  <rect x="8" y="6" width="44" height="30" fill="#f3e3c6" />
+                  <path d="M 3 6 L 30 -16 L 57 6 Z" fill="#4f78d9" />
+                </g>
+              </g>
+
+              <!-- Tilted Tech Towers -->
+              <g transform="translate(800,500)" filter="url(#dropSh)">
+                <rect x="-58" y="-70" width="34" height="88" fill="url(#towerGrad)" transform="rotate(-4 -41 -26)" />
+                <rect x="-14" y="-98" width="40" height="116" fill="url(#towerGrad)" />
+                <rect x="34" y="-58" width="30" height="76" fill="url(#towerGrad)" transform="rotate(4 49 -20)" />
+                <g fill="#ffd54d">
+                  <rect x="-8" y="-88" width="8" height="8" /><rect x="8" y="-88" width="8" height="8" />
+                  <rect x="-8" y="-68" width="8" height="8" /><rect x="8" y="-48" width="8" height="8" />
+                  <rect x="-52" y="-58" width="7" height="7" /><rect x="-40" y="-38" width="7" height="7" />
+                  <rect x="40" y="-46" width="6" height="6" /><rect x="40" y="-28" width="6" height="6" />
+                </g>
+              </g>
+
+              <!-- Salty Skills Springs -->
+              <g transform="translate(905,755)">
+                <ellipse cx="-30" cy="10" rx="26" ry="14" fill="#57c7e8" stroke="#e8d29a" stroke-width="5" />
+                <ellipse cx="34" cy="-4" rx="20" ry="11" fill="#57c7e8" stroke="#e8d29a" stroke-width="5" />
+                <g filter="url(#dropSh)">
+                  <rect x="-8" y="-38" width="38" height="26" fill="#f3e3c6" />
+                  <path d="M -13 -38 L 11 -56 L 35 -38 Z" fill="#d98a3f" />
+                </g>
+              </g>
+
+              <!-- Loot Lake chest island -->
+              <g transform="translate(1080,420)" filter="url(#dropSh)">
+                <rect x="-16" y="-10" width="32" height="20" rx="3" fill="#a8642c" />
+                <path d="M -16 -10 Q 0 -26 16 -10 Z" fill="#c07a38" />
+                <rect x="-3" y="-8" width="6" height="16" fill="#ffd54d" />
+              </g>
+
+              <!-- trees scattered -->
+              <use href="#tree" transform="translate(520,560)" />
+              <use href="#tree" transform="translate(700,660) scale(0.85)" />
+              <use href="#tree" transform="translate(1150,610) scale(0.9)" />
+              <use href="#tree" transform="translate(1210,540) scale(0.7)" />
+              <use href="#tree" transform="translate(560,250) scale(0.8)" />
+              <use href="#tree" transform="translate(980,250) scale(0.85)" />
+              <use href="#tree" transform="translate(450,520) scale(0.75)" />
+              <use href="#tree" transform="translate(1100,700) scale(0.8)" />
+
+              <!-- spawn island props -->
+              <use href="#tree" transform="translate(170,750) scale(0.7)" />
+              <g transform="translate(228,764)">
+                <rect x="-2" y="-34" width="4" height="34" fill="#8a5a33" />
+                <path d="M 2 -34 L 34 -26 L 2 -18 Z" fill="#4f78d9" />
+              </g>
+            </g>
+          </defs>
+
+          <!-- visible map -->
+          <use href="#islandArt" />
+
+          <!-- storm circle -->
+          <g class="storm">
+            <circle id="stormCircle" cx="800" cy="500" r="620" fill="none" stroke="url(#stormGrad)" stroke-width="10" opacity="0.85" />
+          </g>
+
+          <!-- ============ CLICKABLE POI HOTSPOTS ============ -->
+          <g id="poiLayer">
+            <g class="poi" data-poi="education" tabindex="0" role="button" aria-label="Boulder Bluffs: Education">
+              <circle cx="345" cy="395" r="95" class="poi-hit" />
+              <text x="345" y="475" class="poi-label">BOULDER BLUFFS</text>
+              <text x="345" y="497" class="poi-tag">EDUCATION</text>
+            </g>
+            <g class="poi" data-poi="projects" tabindex="0" role="button" aria-label="Pleasant Projects: Projects">
+              <circle cx="630" cy="245" r="85" class="poi-hit" />
+              <text x="630" y="330" class="poi-label">PLEASANT PROJECTS</text>
+              <text x="630" y="352" class="poi-tag">PROJECTS</text>
+            </g>
+            <g class="poi" data-poi="experience" tabindex="0" role="button" aria-label="Tilted Tech Towers: Experience">
+              <circle cx="800" cy="470" r="100" class="poi-hit" />
+              <text x="800" y="580" class="poi-label">TILTED TECH TOWERS</text>
+              <text x="800" y="602" class="poi-tag">EXPERIENCE</text>
+            </g>
+            <g class="poi" data-poi="contact" tabindex="0" role="button" aria-label="Loot Lake Links: Contact">
+              <circle cx="1080" cy="425" r="90" class="poi-hit" />
+              <text x="1080" y="530" class="poi-label">LOOT LAKE LINKS</text>
+              <text x="1080" y="552" class="poi-tag">CONTACT</text>
+            </g>
+            <g class="poi" data-poi="skills" tabindex="0" role="button" aria-label="Salty Skills Springs: Skills">
+              <circle cx="905" cy="745" r="90" class="poi-hit" />
+              <text x="905" y="840" class="poi-label">SALTY SKILLS SPRINGS</text>
+              <text x="905" y="862" class="poi-tag">SKILLS</text>
+            </g>
+            <g class="poi" data-poi="about" tabindex="0" role="button" aria-label="Spawn Island: About Ali">
+              <circle cx="200" cy="770" r="90" class="poi-hit" />
+              <text x="200" y="880" class="poi-label">SPAWN ISLAND</text>
+              <text x="200" y="902" class="poi-tag">ABOUT ME</text>
+            </g>
+          </g>
+
+          <!-- battle bus -->
+          <g id="battleBus" class="battle-bus" aria-hidden="true">
+            <path d="M 0 -46 Q -34 -78 0 -92 Q 34 -78 0 -46 Z" fill="#7b2ff7" stroke="#5a1fd0" stroke-width="3" />
+            <line x1="-14" y1="-52" x2="-10" y2="-24" stroke="#333" stroke-width="2.5" />
+            <line x1="14" y1="-52" x2="10" y2="-24" stroke="#333" stroke-width="2.5" />
+            <rect x="-38" y="-24" width="76" height="34" rx="8" fill="#4f78d9" stroke="#2d4fa3" stroke-width="3" />
+            <rect x="-30" y="-16" width="14" height="12" rx="2" fill="#cfe6ff" />
+            <rect x="-9" y="-16" width="14" height="12" rx="2" fill="#cfe6ff" />
+            <rect x="12" y="-16" width="14" height="12" rx="2" fill="#cfe6ff" />
+            <circle cx="-22" cy="12" r="7" fill="#222" /><circle cx="22" cy="12" r="7" fill="#222" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- Victory banner -->
+      <div id="victory" class="victory" hidden>
+        <div class="victory-inner">
+          <p class="victory-hash">#1</p>
+          <p class="victory-title">VICTORY ROYALE</p>
+          <p class="victory-sub">You discovered every POI. Time to recruit Ali.</p>
+          <a class="panel-btn gold" href="mailto:ali.haroon@colorado.edu">SEND THE INVITE ✉️</a>
+          <button class="victory-close" id="victoryClose">Keep exploring</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ POI PANELS ============ -->
+    <div id="panelBackdrop" class="panel-backdrop" hidden></div>
+
+    <section class="panel" data-panel="experience" hidden aria-label="Experience">
+      <header class="panel-head">
+        <div>
+          <h2>TILTED TECH TOWERS</h2>
+          <p>QUESTLINE: WORK EXPERIENCE</p>
+        </div>
+        <button class="panel-close" aria-label="Close">✕</button>
+      </header>
+      <div class="panel-body">
+        <article class="quest legendary">
+          <div class="quest-top">
+            <h3>Vantor — Software Development Intern</h3>
+            <span class="rarity-pill">LEGENDARY QUEST</span>
+          </div>
+          <p class="quest-meta">Westminster, CO &bull; Jun 2025 – Aug 2025</p>
+          <ul class="quest-list">
+            <li><span class="check">✔</span> Engineered distributed infrastructure for 6 satellite ground-station monitoring environments with Java + Kubernetes <b class="xp">−30% incident response time</b></li>
+            <li><span class="check">✔</span> Built observability dashboards with Grafana, Prometheus, and Java collectors <b class="xp">35 production services</b></li>
+            <li><span class="check">✔</span> Designed automated testing workflows for 15+ Linux microservices with Jenkins CI/CD <b class="xp">+10,000 XP</b></li>
+            <li><span class="check">✔</span> Implemented Spring Boot APIs for low-latency inference <b class="xp">1K+ req/min</b></li>
+          </ul>
+        </article>
+
+        <article class="quest epic">
+          <div class="quest-top">
+            <h3>CUChange — Data Management Research Assistant</h3>
+            <span class="rarity-pill">EPIC QUEST &bull; ACTIVE</span>
+          </div>
+          <p class="quest-meta">Boulder, CO &bull; Jul 2025 – Present</p>
+          <ul class="quest-list">
+            <li><span class="check">✔</span> Developed full-stack Django apps with PostgreSQL on GCP <b class="xp">50K+ research records</b></li>
+            <li><span class="check">✔</span> Built automated pipelines with Python, pandas, and the REDCap API for large-scale cleaning + transformation <b class="xp">+8,000 XP</b></li>
+            <li><span class="check">✔</span> Designed migration &amp; reporting workflows <b class="xp">+300% processing speed</b></li>
+          </ul>
+        </article>
+
+        <article class="quest rare">
+          <div class="quest-top">
+            <h3>ReportsNow — Software Engineering Intern</h3>
+            <span class="rarity-pill">RARE QUEST</span>
+          </div>
+          <p class="quest-meta">Greenwood Village, CO &bull; May 2024 – Jul 2024</p>
+          <ul class="quest-list">
+            <li><span class="check">✔</span> Built a BI platform with C#, ASP.NET Core, and React <b class="xp">125+ client systems</b></li>
+            <li><span class="check">✔</span> Optimized a SQL Server analytics stack with Entity Framework <b class="xp">500+ daily queries</b></li>
+            <li><span class="check">✔</span> Implemented Azure DevOps + Docker CI/CD in Agile/SCRUM workflows <b class="xp">+6,000 XP</b></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="projects" hidden aria-label="Projects">
+      <header class="panel-head">
+        <div>
+          <h2>PLEASANT PROJECTS</h2>
+          <p>LOOT DROPS: THINGS I BUILT</p>
+        </div>
+        <button class="panel-close" aria-label="Close">✕</button>
+      </header>
+      <div class="panel-body loot-grid">
+        <article class="loot legendary">
+          <span class="rarity-pill">LEGENDARY</span>
+          <h3>Polymarket Weather Prediction</h3>
+          <p>Prediction-market weather model trading on real Polymarket data.</p>
+          <p class="loot-stack">Rust &bull; Python &bull; NumPy &bull; pandas &bull; Scikit-learn &bull; PostgreSQL</p>
+          <a class="panel-btn" href="https://github.com/Ali-Haroon3/Polymarket-Weather-Predictor" target="_blank" rel="noreferrer">INSPECT ON GITHUB ↗</a>
+        </article>
+        <article class="loot epic">
+          <span class="rarity-pill">EPIC</span>
+          <h3>BlackjackTrainer</h3>
+          <p>AI-assisted blackjack strategy trainer, deployed on AWS.</p>
+          <p class="loot-stack">Python &bull; Flask &bull; JavaScript &bull; AWS</p>
+          <a class="panel-btn" href="https://github.com/Ali-Haroon3/AIBlackJackTrainer" target="_blank" rel="noreferrer">INSPECT ON GITHUB ↗</a>
+        </article>
+        <article class="loot epic">
+          <span class="rarity-pill">EPIC</span>
+          <h3>Lung Cancer Detection</h3>
+          <p>Deep-learning imaging classifier with an interactive Streamlit front end.</p>
+          <p class="loot-stack">Python &bull; TensorFlow &bull; Streamlit &bull; PostgreSQL</p>
+          <a class="panel-btn" href="https://github.com/Ali-Haroon3/Lung-Cancer-Detection" target="_blank" rel="noreferrer">INSPECT ON GITHUB ↗</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="skills" hidden aria-label="Skills">
+      <header class="panel-head">
+        <div>
+          <h2>SALTY SKILLS SPRINGS</h2>
+          <p>LOCKER: EQUIPPED SKILLS</p>
+        </div>
+        <button class="panel-close" aria-label="Close">✕</button>
+      </header>
+      <div class="panel-body">
+        <div class="inv-grid">
+          <span class="inv legendary">Python</span>
+          <span class="inv legendary">Rust</span>
+          <span class="inv legendary">Java</span>
+          <span class="inv epic">C#</span>
+          <span class="inv epic">SQL</span>
+          <span class="inv epic">JavaScript</span>
+          <span class="inv epic">TensorFlow</span>
+          <span class="inv epic">PyTorch</span>
+          <span class="inv rare">Scikit-learn</span>
+          <span class="inv rare">Kubernetes</span>
+          <span class="inv rare">Docker</span>
+          <span class="inv rare">AWS</span>
+          <span class="inv uncommon">Jenkins</span>
+          <span class="inv uncommon">Azure DevOps</span>
+          <span class="inv uncommon">PostgreSQL</span>
+          <span class="inv common">Grafana</span>
+          <span class="inv common">Prometheus</span>
+        </div>
+        <p class="inv-note">Rarity = how often it's in my main loadout, not how much I like it. Prometheus, you're still loved.</p>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="education" hidden aria-label="Education">
+      <header class="panel-head">
+        <div>
+          <h2>BOULDER BLUFFS</h2>
+          <p>TRAINING GROUNDS: EDUCATION</p>
+        </div>
+        <button class="panel-close" aria-label="Close">✕</button>
+      </header>
+      <div class="panel-body">
+        <article class="quest legendary">
+          <div class="quest-top">
+            <h3>University of Colorado Boulder</h3>
+            <span class="rarity-pill">SENIOR &bull; LEVEL 4/4</span>
+          </div>
+          <p class="quest-meta">Boulder, CO &bull; the real Boulder Bluffs</p>
+          <ul class="quest-list">
+            <li><span class="check">✔</span> B.S. Computer Science <b class="xp">MAIN CLASS</b></li>
+            <li><span class="check">✔</span> Mathematics <b class="xp">DUAL WIELD</b></li>
+            <li><span class="check">✔</span> Biochemistry <b class="xp">THIRD SLOT</b></li>
+          </ul>
+          <div class="xp-bar"><div class="xp-fill"></div><span>SEASON PROGRESS: SENIOR YEAR</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="contact" hidden aria-label="Contact">
+      <header class="panel-head">
+        <div>
+          <h2>LOOT LAKE LINKS</h2>
+          <p>OPEN THE CHEST: CONTACT ALI</p>
+        </div>
+        <button class="panel-close" aria-label="Close">✕</button>
+      </header>
+      <div class="panel-body">
+        <div id="chestZone" class="chest-zone">
+          <button id="chestBtn" class="chest-btn" aria-label="Open the chest">
+            <svg viewBox="0 0 120 90" width="150" height="112">
+              <rect x="12" y="34" width="96" height="48" rx="6" fill="#a8642c" stroke="#6f3f16" stroke-width="4" />
+              <path class="chest-lid" d="M 12 36 Q 60 -8 108 36 Z" fill="#c07a38" stroke="#6f3f16" stroke-width="4" />
+              <rect x="52" y="40" width="16" height="26" rx="3" fill="#ffd54d" stroke="#b8860b" stroke-width="3" />
+            </svg>
+            <span>TAP TO OPEN</span>
+          </button>
+          <div class="chest-loot" hidden>
+            <a class="panel-btn gold" href="mailto:ali.haroon@colorado.edu">✉️ ali.haroon@colorado.edu</a>
+            <a class="panel-btn" href="https://github.com/Ali-Haroon3" target="_blank" rel="noreferrer">🐙 github.com/Ali-Haroon3</a>
+            <a class="panel-btn" href="https://www.ali-haroon.com" target="_blank" rel="noreferrer">🌐 ali-haroon.com</a>
+            <p class="chest-note">US Citizen &bull; open to 2026 opportunities</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="about" hidden aria-label="About Ali">
+      <header class="panel-head">
+        <div>
+          <h2>SPAWN ISLAND</h2>
+          <p>CHARACTER SELECT: WHO IS ALI?</p>
+        </div>
+        <button class="panel-close" aria-label="Close">✕</button>
+      </header>
+      <div class="panel-body">
+        <div class="about-card">
+          <div class="about-avatar" aria-hidden="true">AH</div>
+          <div>
+            <h3>Ali Haroon</h3>
+            <p class="quest-meta">Senior @ CU Boulder &bull; CS + Math + Biochemistry</p>
+            <p class="about-blurb">
+              I build reliable software systems, data pipelines, and ML-powered products —
+              from distributed infrastructure and observability tooling to full-stack research apps.
+              Main drops: backend systems, data/ML, and anything with a hard problem in the middle.
+            </p>
+            <div class="stat-rows">
+              <div class="stat-row"><span>SYSTEMS &amp; INFRA</span><div class="stat-bar"><i style="width:92%"></i></div></div>
+              <div class="stat-row"><span>DATA / ML</span><div class="stat-bar"><i style="width:88%"></i></div></div>
+              <div class="stat-row"><span>FULL-STACK</span><div class="stat-bar"><i style="width:82%"></i></div></div>
+              <div class="stat-row"><span>BUILD BATTLES</span><div class="stat-bar"><i style="width:34%"></i></div><em>(working on it)</em></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
