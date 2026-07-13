@@ -1,9 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <path d="M24 14 H104 Q108 14 108 20 V64 Q108 92 64 114 Q20 92 20 64 V20 Q20 14 24 14 Z" fill="#0b1020" transform="translate(6,7)"/>
-  <path d="M24 14 H104 Q108 14 108 20 V64 Q108 92 64 114 Q20 92 20 64 V20 Q20 14 24 14 Z" fill="#17204a" stroke="#fbd444" stroke-width="6"/>
-  <path d="M32 23 H96 Q100 23 100 27 V63 Q100 86 64 103 Q28 86 28 63 V27 Q28 23 32 23 Z" fill="none" stroke="#b04df9" stroke-width="2.5" opacity="0.7"/>
-  <g fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M38 80 L48 44 L58 80 M43 66 H53"/>
-    <path d="M70 44 V80 M90 44 V80 M70 63 H90"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect x="16" y="16" width="164" height="164" rx="34" fill="#7d29a5"/>
+  <g fill="#ffffff" transform="translate(15,-4) skewX(-7)">
+    <polygon points="40,150 57,150 76,58 66,58"/>
+    <polygon points="110,150 93,150 74,58 84,58"/>
+    <polygon points="59,108 91,108 91,125 59,125"/>
+    <polygon points="112,58 127,58 127,150 112,150"/>
+    <polygon points="139,58 154,58 154,150 139,150"/>
+    <polygon points="112,96 154,96 154,113 112,113"/>
   </g>
 </svg>
