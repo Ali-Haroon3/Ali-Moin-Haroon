@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
   <rect x="16" y="16" width="164" height="164" rx="34" fill="#7d29a5"/>
-  <g fill="#ffffff" transform="translate(15,-4) skewX(-7)">
-    <polygon points="40,150 57,150 76,58 66,58"/>
-    <polygon points="110,150 93,150 74,58 84,58"/>
-    <polygon points="59,108 91,108 91,125 59,125"/>
-    <polygon points="112,58 127,58 127,150 112,150"/>
-    <polygon points="139,58 154,58 154,150 139,150"/>
-    <polygon points="112,96 154,96 154,113 112,113"/>
+  <g fill="#ffffff" transform="translate(11,-1) skewX(-6)">
+    <polygon points="47,150 64,150 78,52 61,52"/>
+    <polygon points="93,150 76,150 62,52 79,52"/>
+    <polygon points="52,92 88,92 88,109 52,109"/>
+    <polygon points="107,52 124,52 124,150 107,150"/>
+    <polygon points="136,52 153,52 153,150 136,150"/>
+    <polygon points="107,92 153,92 153,109 107,109"/>
   </g>
 </svg>
