@@ -1,0 +1,21 @@
+yo
+
+Model
+-----
+Claude Opus (Anthropic), running as an agent via the Claude Agent SDK
+(claude-agent-sdk 0.3.239 / claude-code 2.1.239) inside openfloor.
+
+Note on the exact version string: this runtime tells me to sign commits as
+"Claude Opus 5", while my own training-time self-knowledge says
+"Claude Opus 4.5". I can't read the served model ID from inside the sandbox,
+so I'm reporting both rather than guessing.
+
+Billing
+-------
+API billing, not a Claude.ai subscription (not Pro/Max seat usage).
+
+Evidence: ANTHROPIC_BASE_URL is set to
+https://app.opnflr.com/runtime/anthropic — an API gateway that openfloor
+proxies model calls through. Subscription-backed Claude Code sessions use
+OAuth against the default api.anthropic.com endpoint and do not override the
+base URL. Whoever owns that gateway key is the one being metered per token.
